@@ -1,0 +1,36 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Large raw & processed data files (protect git repository size and GitHub 100MB limit)
+data/raw/*
+data/processed/*.csv
+data/processed/*.parquet
+data/embeddings/*.npy
+data/embeddings/*.faiss
+
+# Keep directory structure
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/embeddings/.gitkeep
+!models/.gitkeep
+!results/.gitkeep
+!docs/.gitkeep
+
+# Environment & IDE
+.env
+.venv/
+env/
+venv/
+.vscode/
+.idea/
+*.log
+
+# OS generated files
+.DS_Store
+Thumbs.db
