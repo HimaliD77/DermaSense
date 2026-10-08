@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermaSense — Your Tailored Recommendations</title>
+  <meta name="description" content="Personalized skincare recommendations tailored to your unique skin profile with transparent ingredient and review evidence.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+</head>
+<body>
+
+  <!-- Decorative Botanical Glows -->
+  <div class="bg-decor bg-decor-1"></div>
+  <div class="bg-decor bg-decor-2"></div>
+
+  <div class="container">
+    
+    <!-- Header & Branding -->
+    <header class="header">
+      <div class="brand-badge">✨ Step 2: Tailored Formulations</div>
+      <h1 class="brand-title">Derma<span>Sense</span></h1>
+      <p class="brand-subtitle">
+        Scientifically ranked products matching your active ingredients, skin satisfaction thresholds, and budget.
+      </p>
+
+      <!-- Navigation Header -->
+      <nav class="nav-tabs" role="navigation" aria-label="Main Navigation">
+        <a href="/" class="nav-tab-btn">
+          <span>🌸</span> 1. Your Skin Profile
+        </a>
+        <a href="/recommendations" class="nav-tab-btn active">
+          <span>✨</span> 2. Recommendations
+        </a>
+        <a href="/compare" class="nav-tab-btn">
+          <span>⚖️</span> Compare Products
+        </a>
+        <a href="/ingredients" class="nav-tab-btn">
+          <span>🌿</span> Ingredient Dictionary
+        </a>
+      </nav>
+    </header>
+
+    <!-- Active Skin Profile Summary Bar -->
+    <section class="card" style="padding: 20px 28px; margin-bottom: 24px; background: var(--warm-cream); border: 1.5px solid var(--border-light);">
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
+        <div>
+          <div style="font-size: 0.82rem; font-weight: 700; color: var(--primary-rose); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px;">Active Skin Profile</div>
+          <div id="profileSummaryText" style="font-size: 1.05rem; font-weight: 600; color: var(--text-primary);">
+            Loading profile...
+          </div>
+        </div>
+
+        <a href="/" class="nav-tab-btn" style="padding: 8px 18px; font-size: 0.88rem; background: #FFFFFF; text-decoration: none;">
+          ✏️ Edit Profile
+        </a>
+      </div>
+    </section>
+
+    <!-- Refine Controls Bar -->
+    <section class="card" style="padding: 20px 28px; margin-bottom: 30px;">
+      <div class="controls-grid" style="margin-bottom: 0;">
+        <div>
+          <label class="form-label" for="refineCategory">Filter Category</label>
+          <select id="refineCategory" class="select-input">
+            <option value="All">All Categories</option>
+            <option value="Cleanser">Cleanser</option>
+            <option value="Moisturizer">Moisturizer</option>
+            <option value="Treatment & Serum">Treatment & Serum</option>
+            <option value="Sunscreen">Sunscreen</option>
+            <option value="Eye Cream">Eye Cream</option>
+            <option value="Mask">Mask</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="form-label" for="refineBudget">Budget Cap</label>
+          <div class="slider-container">
+            <input type="range" id="refineBudget" class="range-slider" min="10" max="200" step="5" value="60">
+            <span class="slider-val" id="refineBudgetVal">$60</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label" for="refinePreset">AI Scoring Focus</label>
+          <select id="refinePreset" class="select-input">
+            <option value="balanced">Balanced (Holistic AI)</option>
+            <option value="ingredient_focus">Active Ingredient Focus</option>
+            <option value="review_focus">Review & Satisfaction Focus</option>
+            <option value="budget_focus">Best Value & Budget Focus</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Results Section -->
+    <main>
+      <div class="results-header">
+        <h2 class="results-title">Your Recommended Skincare</h2>
+        <span class="results-count" id="resultsCount">Analyzing matching formulations...</span>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <div class="loading-spinner" style="grid-column: 1 / -1;">
+          🌸 Formulating your personalized recommendations...
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Sticky Comparison Tray -->
+  <div class="compare-tray" id="compareTray">
+    <span class="tray-text">Selected <strong id="trayCount">0</strong> / 2 products for comparison</span>
+    <button type="button" class="btn-tray-compare" id="btnLaunchTrayCompare">Compare Now</button>
+  </div>
+
+  <script>
+    // State for Recommendations Page
+    let currentSkinType = null;
+    let currentConcerns = [];
+    let currentCategory = 'All';
+    let currentBudget = 60;
+    let currentPreset = 'balanced';
+    let currentQuery = '';
+    const comparisonList = new Map();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Read URL Parameters or localStorage
+      const urlParams = new URLSearchParams(window.location.search);
+      currentSkinType = urlParams.get('skin_type') || localStorage.getItem('dermasense_skin_type') || 'oily';
+      
+      const concernsParam = urlParams.get('concerns');
+      if (concernsParam) {
+        currentConcerns = concernsParam.split('|').filter(c => c.trim());
+      } else {
+        try {
+          currentConcerns = JSON.parse(localStorage.getItem('dermasense_concerns') || '["Hydration & Barrier", "Acne & Blemish Control"]');
+        } catch(e) { currentConcerns = []; }
+      }
+
+      currentCategory = urlParams.get('category') || localStorage.getItem('dermasense_category') || 'All';
+      currentBudget = Number(urlParams.get('budget') || localStorage.getItem('dermasense_budget') || 60);
+      currentPreset = urlParams.get('preset') || localStorage.getItem('dermasense_preset') || 'balanced';
+      currentQuery = urlParams.get('q') || localStorage.getItem('dermasense_query') || '';
+
+      // Update Summary Bar
+      const stDisplay = currentSkinType ? capitalize(currentSkinType) + ' Skin' : 'All Skin Types';
+      const concernsDisplay = currentConcerns.length > 0 ? currentConcerns.join(', ') : 'General Care';
+      document.getElementById('profileSummaryText').innerHTML = `
+        <strong>${escapeHtml(stDisplay)}</strong> &bull; Concerns: <span style="color: var(--primary-rose);">${escapeHtml(concernsDisplay)}</span> &bull; Budget: <strong>$${currentBudget}</strong>
+      `;
+
+      // Update Refine Form Values
+      const refineCat = document.getElementById('refineCategory');
+      const refineBudget = document.getElementById('refineBudget');
+      const refineBudgetVal = document.getElementById('refineBudgetVal');
+      const refinePreset = document.getElementById('refinePreset');
+
+      refineCat.value = currentCategory;
+      refineBudget.value = currentBudget;
+      refineBudgetVal.textContent = `$${currentBudget}`;
+      refinePreset.value = currentPreset;
+
+      // Event listeners for live refine
+      refineBudget.addEventListener('input', (e) => {
+        currentBudget = Number(e.target.value);
+        refineBudgetVal.textContent = `$${currentBudget}`;
+        fetchRecommendations();
+      });
+
+      refineCat.addEventListener('change', (e) => {
+        currentCategory = e.target.value;
+        fetchRecommendations();
+      });
+
+      refinePreset.addEventListener('change', (e) => {
+        currentPreset = e.target.value;
+        fetchRecommendations();
+      });
+
+      // Initial Fetch
+      fetchRecommendations();
+    });
+
+    async function fetchRecommendations() {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = `
+        <div class="loading-spinner" style="grid-column: 1 / -1;">
+          🌸 AI is formulating your personalized recommendations...
+        </div>
+      `;
+
+      try {
+        const response = await fetch('/api/recommend', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            query: currentQuery,
+            skin_type: currentSkinType,
+            target_concerns: currentConcerns,
+            category: currentCategory,
+            max_price: currentBudget,
+            preset: currentPreset,
+            top_k: 6
+          })
+        });
+
+        const data = await response.json();
+        if (data.status === 'success') {
+          renderRecommendations(data.recommendations);
+        } else {
+          grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--primary-rose);">Error: ${data.message}</p>`;
+        }
+      } catch (err) {
+        grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: var(--primary-rose);">Unable to fetch recommendations.</p>`;
+      }
+    }
+
+    function renderRecommendations(products) {
+      const grid = document.getElementById('productsGrid');
+      const resultsCount = document.getElementById('resultsCount');
+
+      if (!products || products.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 40px;">
+            <p style="font-size: 1.1rem; color: var(--text-secondary);">No matching products found within this category or budget. Try adjusting the budget cap above.</p>
+          </div>
+        `;
+        resultsCount.textContent = '0 matches';
+        return;
+      }
+
+      resultsCount.textContent = `Showing top ${products.length} matches`;
+      grid.innerHTML = '';
+
+      products.forEach(prod => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+
+        const priceText = prod.price_usd ? `$${prod.price_usd.toFixed(2)}` : 'Check Retailer';
+        const isSelected = comparisonList.has(prod.product_id);
+
+        let stBadge = '';
+        if (currentSkinType && prod.skin_type_metrics.rating) {
+          stBadge = `<span class="skin-type-badge">🌿 ${prod.skin_type_metrics.rating.toFixed(1)}★ for ${capitalize(currentSkinType)} Skin (${prod.skin_type_metrics.review_count} revs)</span>`;
+        }
+
+        const benefitTags = (prod.matched_benefits || []).slice(0, 3).map(b => `<span class="badge-benefit">${escapeHtml(b)}</span>`).join('');
+        const activeTags = (prod.matched_actives || []).slice(0, 3).map(a => `<span class="badge-active">🔬 ${escapeHtml(capitalize(a))}</span>`).join('');
+
+        card.innerHTML = `
+          <div>
+            <div class="card-top-bar">
+              <span class="product-brand">${escapeHtml(prod.brand || 'Skincare')}</span>
+              <span class="product-category-badge">${escapeHtml(prod.category || 'Product')}</span>
+            </div>
+            <h3 class="product-title">${escapeHtml(prod.product_name)}</h3>
+            
+            <div class="ratings-row">
+              <span class="star-rating">★ ${prod.rating.toFixed(1)}</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">(${prod.review_count.toLocaleString()} reviews)</span>
+              ${stBadge}
+            </div>
+
+            <div class="price-tag">${priceText}</div>
+
+            <div class="badges-row">
+              ${benefitTags}
+              ${activeTags}
+            </div>
+          </div>
+
+          <div>
+            <div class="card-actions">
+              <button type="button" class="btn-explain" data-id="${prod.product_id}">
+                <span>💡</span> Why This?
+              </button>
+              <button type="button" class="btn-compare-toggle ${isSelected ? 'selected' : ''}" data-id="${prod.product_id}">
+                ${isSelected ? '✓ In Compare' : '+ Compare'}
+              </button>
+            </div>
+
+            <div class="explain-panel" id="explain-${prod.product_id}">
+              <h4 class="explain-section-title">Why it matches your profile</h4>
+              <ul class="explain-list">
+                <li>Formulated as a <strong>${escapeHtml(prod.category)}</strong> for target skin compatibility.</li>
+                ${(prod.explanation.matched_concerns || []).length > 0 ? `<li>Directly targets your concerns: <strong>${escapeHtml(prod.explanation.matched_concerns.join(', '))}</strong>.</li>` : ''}
+              </ul>
+
+              ${(prod.explanation.ingredient_rationales || []).length > 0 ? `
+                <h4 class="explain-section-title">Key Active Ingredients</h4>
+                <ul class="explain-list">
+                  ${prod.explanation.ingredient_rationales.map(r => `<li>${formatMarkdownSnippet(r)}</li>`).join('')}
+                </ul>
+              ` : ''}
+
+              ${(prod.explanation.sentiment_highlights || []).length > 0 ? `
+                <h4 class="explain-section-title">Customer Sentiment Highlights</h4>
+                <ul class="explain-list">
+                  ${prod.explanation.sentiment_highlights.map(h => `<li>${formatMarkdownSnippet(h)}</li>`).join('')}
+                </ul>
+              ` : ''}
+            </div>
+          </div>
+        `;
+
+        const btnExplain = card.querySelector('.btn-explain');
+        const explainPanel = card.querySelector('.explain-panel');
+        btnExplain.addEventListener('click', () => {
+          explainPanel.classList.toggle('open');
+          btnExplain.classList.toggle('active');
+        });
+
+        const btnCompare = card.querySelector('.btn-compare-toggle');
+        btnCompare.addEventListener('click', () => {
+          toggleCompareProduct(prod, btnCompare);
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    function toggleCompareProduct(prod, btn) {
+      if (comparisonList.has(prod.product_id)) {
+        comparisonList.delete(prod.product_id);
+        btn.classList.remove('selected');
+        btn.textContent = '+ Compare';
+      } else {
+        if (comparisonList.size >= 2) {
+          alert("You can compare up to 2 products at a time. Click 'Compare Now' or deselect one.");
+          return;
+        }
+        comparisonList.set(prod.product_id, prod);
+        btn.classList.add('selected');
+        btn.textContent = '✓ In Compare';
+      }
+      updateCompareTray();
+    }
+
+    function updateCompareTray() {
+      const tray = document.getElementById('compareTray');
+      const count = comparisonList.size;
+      document.getElementById('trayCount').textContent = count;
+      if (count > 0) tray.classList.add('visible');
+      else tray.classList.remove('visible');
+    }
+
+    document.getElementById('btnLaunchTrayCompare').addEventListener('click', () => {
+      const ids = Array.from(comparisonList.keys());
+      if (ids.length === 2) {
+        localStorage.setItem('dermasense_compare_a', ids[0]);
+        localStorage.setItem('dermasense_compare_b', ids[1]);
+        window.location.href = `/compare?id_a=${ids[0]}&id_b=${ids[1]}`;
+      } else {
+        alert("Please select 2 products to compare head-to-head.");
+      }
+    });
+
+    function capitalize(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatMarkdownSnippet(text) {
+      if (!text) return '';
+      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+  </script>
+</body>
+</html>

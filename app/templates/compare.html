@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermaSense — Side-by-Side Product Comparison</title>
+  <meta name="description" content="Compare two skincare products head-to-head on active ingredients, skin satisfaction, and overall value.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+</head>
+<body>
+
+  <!-- Decorative Botanical Glows -->
+  <div class="bg-decor bg-decor-1"></div>
+  <div class="bg-decor bg-decor-2"></div>
+
+  <div class="container">
+    
+    <!-- Header & Branding -->
+    <header class="header">
+      <div class="brand-badge">⚖️ Comparative Chemistry</div>
+      <h1 class="brand-title">Derma<span>Sense</span></h1>
+      <p class="brand-subtitle">
+        Compare two formulations head-to-head on active chemical overlap, skin satisfaction, and algorithm-determined fit.
+      </p>
+
+      <!-- Navigation Header -->
+      <nav class="nav-tabs" role="navigation" aria-label="Main Navigation">
+        <a href="/" class="nav-tab-btn">
+          <span>🌸</span> 1. Your Skin Profile
+        </a>
+        <a href="/recommendations" class="nav-tab-btn">
+          <span>✨</span> 2. Recommendations
+        </a>
+        <a href="/compare" class="nav-tab-btn active">
+          <span>⚖️</span> Compare Products
+        </a>
+        <a href="/ingredients" class="nav-tab-btn">
+          <span>🌿</span> Ingredient Dictionary
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="card">
+        <h2 class="card-header-title">Compare Formulations Head-to-Head</h2>
+        <p class="card-header-desc">Search and select any two skincare products from our unified catalog of 16,110 items.</p>
+
+        <div class="controls-grid" style="grid-template-columns: 1fr 1fr; margin-bottom: 16px;">
+          <div style="position: relative;">
+            <label class="form-label" for="compareSearchA">Product A</label>
+            <input type="text" id="compareSearchA" class="text-input" placeholder="Type brand or product name (e.g. Ultra Repair Cream)...">
+            <div id="compareSuggestionsA" style="position: absolute; left: 0; right: 0; background: #FFF; border-radius: 8px; box-shadow: var(--shadow-lg); z-index: 50; max-height: 220px; overflow-y: auto;"></div>
+            <input type="hidden" id="compareIdA">
+          </div>
+
+          <div style="position: relative;">
+            <label class="form-label" for="compareSearchB">Product B</label>
+            <input type="text" id="compareSearchB" class="text-input" placeholder="Type brand or product name (e.g. Kiehl's Ultra Facial)...">
+            <div id="compareSuggestionsB" style="position: absolute; left: 0; right: 0; background: #FFF; border-radius: 8px; box-shadow: var(--shadow-lg); z-index: 50; max-height: 220px; overflow-y: auto;"></div>
+            <input type="hidden" id="compareIdB">
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary" id="btnRunComparison">
+          <span>⚖️</span> Run Head-to-Head Analysis
+        </button>
+
+        <div id="comparisonResults" style="display: none; margin-top: 30px;"></div>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const idA = urlParams.get('id_a') || localStorage.getItem('dermasense_compare_a');
+      const idB = urlParams.get('id_b') || localStorage.getItem('dermasense_compare_b');
+
+      const compareSearchA = document.getElementById('compareSearchA');
+      const compareSearchB = document.getElementById('compareSearchB');
+      const compareIdA = document.getElementById('compareIdA');
+      const compareIdB = document.getElementById('compareIdB');
+
+      if (idA && idB) {
+        compareIdA.value = idA;
+        compareIdB.value = idB;
+        compareSearchA.value = `Selected Product A (${idA})`;
+        compareSearchB.value = `Selected Product B (${idB})`;
+        executeComparison(idA, idB);
+      }
+
+      setupAutocomplete(compareSearchA, compareIdA, document.getElementById('compareSuggestionsA'));
+      setupAutocomplete(compareSearchB, compareIdB, document.getElementById('compareSuggestionsB'));
+
+      document.getElementById('btnRunComparison').addEventListener('click', () => {
+        if (!compareIdA.value || !compareIdB.value) {
+          alert("Please select both Product A and Product B to compare.");
+          return;
+        }
+        executeComparison(compareIdA.value, compareIdB.value);
+      });
+    });
+
+    async function executeComparison(idA, idB) {
+      const comparisonResults = document.getElementById('comparisonResults');
+      comparisonResults.style.display = 'block';
+      comparisonResults.innerHTML = '<div class="loading-spinner">⚖️ Analyzing active chemical overlap and review satisfaction...</div>';
+
+      const skinType = localStorage.getItem('dermasense_skin_type') || 'oily';
+      let concerns = [];
+      try { concerns = JSON.parse(localStorage.getItem('dermasense_concerns') || '[]'); } catch(e){}
+
+      try {
+        const response = await fetch('/api/compare', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            product_id_a: idA,
+            product_id_b: idB,
+            skin_type: skinType,
+            target_concerns: concerns
+          })
+        });
+
+        const data = await response.json();
+        if (data.status === 'success') {
+          renderComparison(data.comparison);
+        } else {
+          comparisonResults.innerHTML = `<p style="text-align: center; color: var(--primary-rose);">${data.message}</p>`;
+        }
+      } catch (err) {
+        comparisonResults.innerHTML = '<p style="text-align: center; color: var(--primary-rose);">Unable to run comparison.</p>';
+      }
+    }
+
+    function renderComparison(comp) {
+      const pA = comp.product_a;
+      const pB = comp.product_b;
+
+      const sharedActives = comp.shared_actives.length > 0
+        ? comp.shared_actives.map(a => `<span class="badge-active" style="background: var(--sage-green-light); color: var(--sage-green-dark);">🌿 ${capitalize(a)}</span>`).join(' ')
+        : '<span style="color: var(--text-muted); font-size: 0.85rem;">None shared</span>';
+
+      const uniqueA = comp.unique_actives_a.length > 0
+        ? comp.unique_actives_a.map(a => `<span class="badge-active">🔬 ${capitalize(a)}</span>`).join(' ')
+        : '<span style="color: var(--text-muted); font-size: 0.85rem;">None unique</span>';
+
+      const uniqueB = comp.unique_actives_b.length > 0
+        ? comp.unique_actives_b.map(a => `<span class="badge-active">🔬 ${capitalize(a)}</span>`).join(' ')
+        : '<span style="color: var(--text-muted); font-size: 0.85rem;">None unique</span>';
+
+      document.getElementById('comparisonResults').innerHTML = `
+        <div class="comparison-grid">
+          
+          <!-- Product A -->
+          <div class="comparison-card">
+            <div class="product-brand">${escapeHtml(pA.brand)}</div>
+            <h3 class="product-title" style="font-size: 1.3rem;">${escapeHtml(pA.product_name)}</h3>
+            <div class="price-tag">$${pA.price_usd ? pA.price_usd.toFixed(2) : 'N/A'}</div>
+            
+            <div style="margin: 14px 0;">
+              <strong>Overall Rating:</strong> ★ ${comp.rating_a ? comp.rating_a.toFixed(2) : '4.2'} (${comp.reviews_a} reviews)
+            </div>
+
+            <div style="margin: 14px 0;">
+              <strong style="display: block; margin-bottom: 6px;">Unique Actives:</strong>
+              ${uniqueA}
+            </div>
+          </div>
+
+          <!-- Product B -->
+          <div class="comparison-card">
+            <div class="product-brand">${escapeHtml(pB.brand)}</div>
+            <h3 class="product-title" style="font-size: 1.3rem;">${escapeHtml(pB.product_name)}</h3>
+            <div class="price-tag">$${pB.price_usd ? pB.price_usd.toFixed(2) : 'N/A'}</div>
+
+            <div style="margin: 14px 0;">
+              <strong>Overall Rating:</strong> ★ ${comp.rating_b ? comp.rating_b.toFixed(2) : '4.2'} (${comp.reviews_b} reviews)
+            </div>
+
+            <div style="margin: 14px 0;">
+              <strong style="display: block; margin-bottom: 6px;">Unique Actives:</strong>
+              ${uniqueB}
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card" style="margin-top: 24px;">
+          <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--primary-rose); margin-bottom: 8px;">Shared Active Ingredients</h4>
+          <div>${sharedActives}</div>
+        </div>
+
+        <div class="verdict-box">
+          <div class="verdict-title">🌟 Algorithmic Recommendation Verdict</div>
+          <p style="font-size: 1rem; color: var(--text-primary); max-width: 700px; margin: 0 auto;">
+            ${formatMarkdownSnippet(comp.verdict)}
+          </p>
+        </div>
+      `;
+    }
+
+    function setupAutocomplete(inputEl, idEl, dropdownEl) {
+      let timeout;
+      inputEl.addEventListener('input', () => {
+        clearTimeout(timeout);
+        const val = inputEl.value.trim();
+        if (val.length < 2) {
+          dropdownEl.innerHTML = '';
+          return;
+        }
+
+        timeout = setTimeout(async () => {
+          try {
+            const res = await fetch(`/api/search?q=${encodeURIComponent(val)}&limit=6`);
+            const data = await res.json();
+            if (data.results && data.results.length > 0) {
+              dropdownEl.innerHTML = data.results.map(r => `
+                <div class="suggestion-item" data-id="${r.product_id}" data-title="${escapeHtml(r.product_name)} (${escapeHtml(r.brand)})" style="padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border-soft); font-size: 0.9rem;">
+                  <strong>${escapeHtml(r.product_name)}</strong> <span style="color: var(--primary-rose); font-size: 0.82rem;">(${escapeHtml(r.brand)})</span>
+                </div>
+              `).join('');
+
+              dropdownEl.querySelectorAll('.suggestion-item').forEach(item => {
+                item.addEventListener('click', () => {
+                  idEl.value = item.getAttribute('data-id');
+                  inputEl.value = item.getAttribute('data-title');
+                  dropdownEl.innerHTML = '';
+                });
+              });
+            } else {
+              dropdownEl.innerHTML = '';
+            }
+          } catch (e) { }
+        }, 250);
+      });
+    }
+
+    function capitalize(str) {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function formatMarkdownSnippet(text) {
+      if (!text) return '';
+      return text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+    }
+  </script>
+</body>
+</html>

@@ -22,9 +22,29 @@ recommender = DermaSenseRecommender(use_dense_embeddings=True)
 explainer = DermaSenseExplainer()
 print("DermaSense Web App Engine Ready!")
 
+# --- Page Routes ---
+
 @app.route('/')
 def index():
-    return render_template('index.html')
+    """Page 1: Skin Profile Intake Questionnaire."""
+    return render_template('index.html', active_page='profile')
+
+@app.route('/recommendations')
+def recommendations_page():
+    """Page 2: Dedicated Personalized Recommendations Results Page."""
+    return render_template('recommendations.html', active_page='recommendations')
+
+@app.route('/compare')
+def compare_page():
+    """Page 3: Side-by-Side Product Comparison Page."""
+    return render_template('compare.html', active_page='compare')
+
+@app.route('/ingredients')
+def ingredients_page():
+    """Page 4: Active Ingredient Knowledge Base."""
+    return render_template('ingredients.html', active_page='ingredients')
+
+# --- API Endpoints ---
 
 @app.route('/api/stats', methods=['GET'])
 def get_stats():
@@ -75,7 +95,6 @@ def recommend():
                 max_budget_usd=max_price
             )
             
-            # Helper to safely parse lists
             def _clean_list(val):
                 if isinstance(val, str):
                     try: return json.loads(val)
@@ -89,7 +108,7 @@ def recommend():
                 'category': str(row.get('category')),
                 'price_usd': float(row.get('price_usd')) if pd.notna(row.get('price_usd')) else None,
                 'rating': round(float(row.get('rating')), 2) if pd.notna(row.get('rating')) else 4.2,
-                'review_count': int(row.get('review_count') or 0),
+                'review_count': int(row.get('review_count')) if pd.notna(row.get('review_count')) else 0,
                 'source': str(row.get('source')),
                 'matched_benefits': _clean_list(row.get('matched_benefits')),
                 'matched_actives': _clean_list(row.get('matched_actives')),
@@ -102,7 +121,7 @@ def recommend():
                 },
                 'skin_type_metrics': {
                     'rating': float(row.get(f'{skin_type}_skin_avg_rating')) if skin_type and pd.notna(row.get(f'{skin_type}_skin_avg_rating')) else None,
-                    'review_count': int(row.get(f'{skin_type}_skin_review_count') or 0) if skin_type else 0,
+                    'review_count': int(row.get(f'{skin_type}_skin_review_count')) if skin_type and pd.notna(row.get(f'{skin_type}_skin_review_count')) else 0,
                     'pos_pct': float(row.get(f'{skin_type}_skin_pos_pct')) if skin_type and pd.notna(row.get(f'{skin_type}_skin_pos_pct')) else None
                 },
                 'explanation': exp_data
@@ -116,7 +135,8 @@ def recommend():
                 'skin_type': skin_type,
                 'target_concerns': target_concerns,
                 'category': category,
-                'preset': preset
+                'preset': preset,
+                'max_price': max_price
             },
             'recommendations': recommendations
         })

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermaSense — Skincare Ingredient Dictionary</title>
+  <meta name="description" content="Explore our curated database of 70+ proven active skincare ingredients, biological mechanisms, and therapeutic benefits.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+</head>
+<body>
+
+  <!-- Decorative Botanical Glows -->
+  <div class="bg-decor bg-decor-1"></div>
+  <div class="bg-decor bg-decor-2"></div>
+
+  <div class="container">
+    
+    <!-- Header & Branding -->
+    <header class="header">
+      <div class="brand-badge">🌿 Chemical Ontology</div>
+      <h1 class="brand-title">Derma<span>Sense</span></h1>
+      <p class="brand-subtitle">
+        Understand the science behind your skincare: explore 70+ active compounds categorized by clinical skin benefits.
+      </p>
+
+      <!-- Navigation Header -->
+      <nav class="nav-tabs" role="navigation" aria-label="Main Navigation">
+        <a href="/" class="nav-tab-btn">
+          <span>🌸</span> 1. Your Skin Profile
+        </a>
+        <a href="/recommendations" class="nav-tab-btn">
+          <span>✨</span> 2. Recommendations
+        </a>
+        <a href="/compare" class="nav-tab-btn">
+          <span>⚖️</span> Compare Products
+        </a>
+        <a href="/ingredients" class="nav-tab-btn active">
+          <span>🌿</span> Ingredient Dictionary
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <div class="card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 16px;">
+          <div>
+            <h2 class="card-header-title">Active Ingredient Knowledge Base</h2>
+            <p class="card-header-desc" style="margin-bottom: 0;">Comprehensive breakdown of skincare actives, target concerns, and mechanism of action.</p>
+          </div>
+
+          <div style="max-width: 320px; width: 100%;">
+            <input type="text" id="ingredientFilter" class="text-input" placeholder="🔍 Search ingredient (e.g. Niacinamide, Retinol)...">
+          </div>
+        </div>
+
+        <div id="ingredientsCatalog">
+          <div class="loading-spinner">🌿 Loading active ingredient database...</div>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <script>
+    let ingredientData = {};
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const catalog = document.getElementById('ingredientsCatalog');
+      try {
+        const response = await fetch('/api/ingredients');
+        const data = await response.json();
+        ingredientData = data.categories;
+        renderIngredients(ingredientData);
+      } catch (e) {
+        catalog.innerHTML = '<p style="color: var(--primary-rose);">Unable to load ingredient database.</p>';
+      }
+
+      document.getElementById('ingredientFilter').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        if (!term) {
+          renderIngredients(ingredientData);
+          return;
+        }
+
+        const filtered = {};
+        for (const [cat, items] of Object.entries(ingredientData)) {
+          const matchedItems = items.filter(it => it.name.toLowerCase().includes(term) || it.description.toLowerCase().includes(term));
+          if (matchedItems.length > 0) {
+            filtered[cat] = matchedItems;
+          }
+        }
+        renderIngredients(filtered);
+      });
+    });
+
+    function renderIngredients(categories) {
+      const catalog = document.getElementById('ingredientsCatalog');
+      catalog.innerHTML = '';
+
+      if (Object.keys(categories).length === 0) {
+        catalog.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 30px;">No ingredients matching your search.</p>';
+        return;
+      }
+
+      for (const [category, items] of Object.entries(categories)) {
+        const catCard = document.createElement('div');
+        catCard.className = 'ingredient-category-card';
+        
+        const itemsHtml = items.map(item => `
+          <div class="ingredient-item">
+            <div class="ingredient-item-name">🔬 ${escapeHtml(item.name)}</div>
+            <div class="ingredient-item-desc">${escapeHtml(item.description)}</div>
+          </div>
+        `).join('');
+
+        catCard.innerHTML = `
+          <h3 class="ingredient-category-title">💧 ${escapeHtml(category)} (${items.length})</h3>
+          <div>${itemsHtml}</div>
+        `;
+        catalog.appendChild(catCard);
+      }
+    }
+
+    function escapeHtml(text) {
+      if (!text) return '';
+      return String(text)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+  </script>
+</body>
+</html>
