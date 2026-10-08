@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermaSense — Personalized, Explainable AI Skincare</title>
+  <meta name="description" content="AI-powered skincare recommendation and comparison system tailored to your unique skin type, active ingredients, and review evidence.">
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+</head>
+<body>
+
+  <!-- Decorative Botanical Glows -->
+  <div class="bg-decor bg-decor-1"></div>
+  <div class="bg-decor bg-decor-2"></div>
+
+  <div class="container">
+    
+    <!-- Header & Branding -->
+    <header class="header">
+      <div class="brand-badge">🌿 AI-Powered Skin Intelligence</div>
+      <h1 class="brand-title">Derma<span>Sense</span></h1>
+      <p class="brand-subtitle">
+        Personalized, transparent skincare recommendations tailored to your unique skin profile, scientific ingredient compatibility, and verified community evidence.
+      </p>
+
+      <div class="stats-bar" id="statsBar">
+        <div class="stat-item">✨ <strong id="statProducts">16,110</strong> Formulated Products</div>
+        <div class="stat-item">🔬 <strong id="statBrands">70+</strong> Active Ingredients</div>
+        <div class="stat-item">💬 <strong id="statReviews">1.2M</strong> Verified User Reviews</div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs" role="tablist">
+      <button class="nav-tab-btn active" id="tabBtnRecommend" data-tab="tab-recommend">
+        <span>🌸</span> Personalized Recommendations
+      </button>
+      <button class="nav-tab-btn" id="tabBtnCompare" data-tab="tab-compare">
+        <span>⚖️</span> Compare Products
+      </button>
+      <button class="nav-tab-btn" id="tabBtnIngredients" data-tab="tab-ingredients">
+        <span>🌿</span> Ingredient Dictionary
+      </button>
+    </nav>
+
+    <!-- =========================================================================
+         TAB 1: PERSONALIZED RECOMMENDATIONS
+         ========================================================================= -->
+    <main id="tab-recommend" class="tab-view active">
+      
+      <!-- Skin Profile Intake Form -->
+      <section class="card" aria-labelledby="profile-heading">
+        <h2 id="profile-heading" class="card-header-title">Your Skin Profile</h2>
+        <p class="card-header-desc">Customize your profile so our multi-factor AI engine can match products proven for your skin.</p>
+
+        <!-- 1. Skin Type Selector -->
+        <div class="form-section">
+          <label class="form-label">1. Select Your Skin Type <span>(Required for tailored community evidence)</span></label>
+          <div class="skin-type-grid" id="skinTypeSelector">
+            <button type="button" class="skin-type-btn" data-type="oily" id="btnSkinOily">
+              🌿 Oily
+              <span class="skin-type-desc">Excess shine, enlarged pores</span>
+            </button>
+            <button type="button" class="skin-type-btn" data-type="dry" id="btnSkinDry">
+              💧 Dry
+              <span class="skin-type-desc">Tightness, flakiness, dullness</span>
+            </button>
+            <button type="button" class="skin-type-btn" data-type="combination" id="btnSkinCombo">
+              ⚖️ Combination
+              <span class="skin-type-desc">Oily T-zone, normal/dry cheeks</span>
+            </button>
+            <button type="button" class="skin-type-btn" data-type="normal" id="btnSkinNormal">
+              ✨ Normal
+              <span class="skin-type-desc">Balanced, comfortable skin</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- 2. Primary Skin Concerns -->
+        <div class="form-section">
+          <label class="form-label">2. Target Skin Concerns <span>(Select all that apply)</span></label>
+          <div class="concerns-flex" id="concernsSelector">
+            <button type="button" class="concern-pill" data-concern="Hydration & Barrier">💧 Hydration & Barrier</button>
+            <button type="button" class="concern-pill" data-concern="Acne & Blemish Control">🎯 Acne & Blemishes</button>
+            <button type="button" class="concern-pill" data-concern="Brightening & Tone">✨ Brightening & Tone</button>
+            <button type="button" class="concern-pill" data-concern="Anti-Aging & Firming">⏳ Anti-Aging & Firming</button>
+            <button type="button" class="concern-pill" data-concern="Soothing & Anti-Redness">🌸 Calming & Redness</button>
+            <button type="button" class="concern-pill" data-concern="Sun Protection">☀️ Sun Protection</button>
+            <button type="button" class="concern-pill" data-concern="Oil & Pore Control">🫧 Oil & Pore Control</button>
+            <button type="button" class="concern-pill" data-concern="Exfoliation & Texture">🍃 Exfoliation & Texture</button>
+          </div>
+        </div>
+
+        <!-- 3. Controls: Category, Budget, Presets -->
+        <div class="controls-grid">
+          <div>
+            <label class="form-label" for="categorySelect">Product Category</label>
+            <select id="categorySelect" class="select-input">
+              <option value="All">All Categories</option>
+              <option value="Cleanser">Cleanser</option>
+              <option value="Moisturizer">Moisturizer</option>
+              <option value="Treatment & Serum">Treatment & Serum</option>
+              <option value="Sunscreen">Sunscreen</option>
+              <option value="Eye Cream">Eye Cream</option>
+              <option value="Mask">Mask</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="form-label" for="budgetSlider">Maximum Budget (USD)</label>
+            <div class="slider-container">
+              <input type="range" id="budgetSlider" class="range-slider" min="10" max="200" step="5" value="60">
+              <span class="slider-val" id="budgetDisplay">$60</span>
+            </div>
+          </div>
+
+          <div>
+            <label class="form-label" for="presetSelect">AI Scoring Focus</label>
+            <select id="presetSelect" class="select-input">
+              <option value="balanced">Balanced (Holistic AI)</option>
+              <option value="ingredient_focus">Active Ingredient Focus</option>
+              <option value="review_focus">Review & Satisfaction Focus</option>
+              <option value="budget_focus">Best Value & Budget Focus</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- 4. Natural Language Search Query -->
+        <div class="form-section">
+          <label class="form-label" for="queryInput">3. Specific Preferences or Ingredients <span>(Optional)</span></label>
+          <div class="query-box">
+            <span class="query-icon">🔍</span>
+            <input type="text" id="queryInput" class="query-input" placeholder="e.g. gentle soothing cleanser with ceramides, fragrance-free, lightweight gel...">
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" class="btn-primary" id="btnGetRecommendations">
+          <span>🌸</span> Find My Tailored Products
+        </button>
+
+      </section>
+
+      <!-- Recommendation Results Area -->
+      <section id="resultsSection" style="display: none;">
+        <div class="results-header">
+          <h2 class="results-title">Tailored Recommendations</h2>
+          <span class="results-count" id="resultsCount">Showing top matches</span>
+        </div>
+
+        <div class="products-grid" id="productsGrid">
+          <!-- Dynamically populated product cards -->
+        </div>
+      </section>
+
+    </main>
+
+    <!-- =========================================================================
+         TAB 2: SIDE-BY-SIDE PRODUCT COMPARISON
+         ========================================================================= -->
+    <section id="tab-compare" class="tab-view">
+      <div class="card">
+        <h2 class="card-header-title">Side-by-Side Product Comparison</h2>
+        <p class="card-header-desc">Compare two skincare products head-to-head on active ingredients, skin satisfaction, and overall value.</p>
+
+        <div class="controls-grid" style="grid-template-columns: 1fr 1fr;">
+          <div>
+            <label class="form-label" for="compareSearchA">Product A</label>
+            <input type="text" id="compareSearchA" class="text-input" placeholder="Search product A (e.g. First Aid Beauty Ultra Repair)...">
+            <div id="compareSuggestionsA" class="suggestions-dropdown"></div>
+            <input type="hidden" id="compareIdA">
+          </div>
+
+          <div>
+            <label class="form-label" for="compareSearchB">Product B</label>
+            <input type="text" id="compareSearchB" class="text-input" placeholder="Search product B (e.g. Kiehl's Ultra Facial)...">
+            <div id="compareSuggestionsB" class="suggestions-dropdown"></div>
+            <input type="hidden" id="compareIdB">
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary" id="btnRunComparison" style="margin-top: 10px;">
+          <span>⚖️</span> Compare Head-to-Head
+        </button>
+
+        <div id="comparisonResults" style="display: none; margin-top: 30px;">
+          <!-- Dynamically populated comparison view -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         TAB 3: INGREDIENT DICTIONARY
+         ========================================================================= -->
+    <section id="tab-ingredients" class="tab-view">
+      <div class="card">
+        <h2 class="card-header-title">Skincare Active Ingredient Knowledge Base</h2>
+        <p class="card-header-desc">Explore our curated ontology of 70+ proven skincare active ingredients, biological mechanisms, and therapeutic benefits.</p>
+
+        <div id="ingredientsCatalog">
+          <!-- Dynamically populated ingredient categories -->
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Sticky Comparison Tray -->
+  <div class="compare-tray" id="compareTray">
+    <span class="tray-text">Selected <strong id="trayCount">0</strong> / 2 products for comparison</span>
+    <button type="button" class="btn-tray-compare" id="btnLaunchTrayCompare">Compare Now</button>
+  </div>
+
+  <script src="/static/js/main.js"></script>
+</body>
+</html>
