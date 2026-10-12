@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DermaSense — Side-by-Side Product Comparison</title>
-  <meta name="description" content="Compare two skincare products head-to-head on active ingredients, skin satisfaction, and overall value.">
+  <meta name="description" content="Compare two skincare products head-to-head on active ingredients, skin satisfaction, and overall value in INR.">
   <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/dermasense_favicon.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png?v=2">
+  <link rel="shortcut icon" href="/favicon.ico?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png?v=2">
 </head>
 <body>
 
@@ -16,12 +20,15 @@
 
   <div class="container">
     
-    <!-- Header & Branding -->
+    <!-- Header & Branding with Uncluttered Botanical Emblem -->
     <header class="header">
-      <div class="brand-badge">⚖️ Comparative Chemistry</div>
+      <div class="brand-logo-container">
+        <img src="/static/images/dermasense_emblem.png" alt="DermaSense Botanical Emblem" class="brand-logo-img">
+      </div>
+      <div class="brand-tagline">Personalized • Explainable • Intelligent Skincare</div>
       <h1 class="brand-title">Derma<span>Sense</span></h1>
       <p class="brand-subtitle">
-        Compare two formulations head-to-head on active chemical overlap, skin satisfaction, and algorithm-determined fit.
+        Compare two formulations head-to-head on active chemical overlap, skin satisfaction, and algorithm-determined fit in INR (₹).
       </p>
 
       <!-- Navigation Header -->
@@ -106,7 +113,7 @@
     async function executeComparison(idA, idB) {
       const comparisonResults = document.getElementById('comparisonResults');
       comparisonResults.style.display = 'block';
-      comparisonResults.innerHTML = '<div class="loading-spinner">⚖️ Analyzing active chemical overlap and review satisfaction...</div>';
+      comparisonResults.innerHTML = '<div class="loading-spinner">⚖️ Analyzing active chemical overlap and review satisfaction in INR...</div>';
 
       const skinType = localStorage.getItem('dermasense_skin_type') || 'oily';
       let concerns = [];
@@ -139,6 +146,9 @@
       const pA = comp.product_a;
       const pB = comp.product_b;
 
+      const priceA = pA.price_inr ? `₹${Math.round(pA.price_inr).toLocaleString()}` : 'Check Platform';
+      const priceB = pB.price_inr ? `₹${Math.round(pB.price_inr).toLocaleString()}` : 'Check Platform';
+
       const sharedActives = comp.shared_actives.length > 0
         ? comp.shared_actives.map(a => `<span class="badge-active" style="background: var(--sage-green-light); color: var(--sage-green-dark);">🌿 ${capitalize(a)}</span>`).join(' ')
         : '<span style="color: var(--text-muted); font-size: 0.85rem;">None shared</span>';
@@ -158,7 +168,7 @@
           <div class="comparison-card">
             <div class="product-brand">${escapeHtml(pA.brand)}</div>
             <h3 class="product-title" style="font-size: 1.3rem;">${escapeHtml(pA.product_name)}</h3>
-            <div class="price-tag">$${pA.price_usd ? pA.price_usd.toFixed(2) : 'N/A'}</div>
+            <div class="price-tag">${priceA}</div>
             
             <div style="margin: 14px 0;">
               <strong>Overall Rating:</strong> ★ ${comp.rating_a ? comp.rating_a.toFixed(2) : '4.2'} (${comp.reviews_a} reviews)
@@ -174,7 +184,7 @@
           <div class="comparison-card">
             <div class="product-brand">${escapeHtml(pB.brand)}</div>
             <h3 class="product-title" style="font-size: 1.3rem;">${escapeHtml(pB.product_name)}</h3>
-            <div class="price-tag">$${pB.price_usd ? pB.price_usd.toFixed(2) : 'N/A'}</div>
+            <div class="price-tag">${priceB}</div>
 
             <div style="margin: 14px 0;">
               <strong>Overall Rating:</strong> ★ ${comp.rating_b ? comp.rating_b.toFixed(2) : '4.2'} (${comp.reviews_b} reviews)
@@ -192,6 +202,32 @@
           <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: var(--primary-rose); margin-bottom: 8px;">Shared Active Ingredients</h4>
           <div>${sharedActives}</div>
         </div>
+
+        ${comp.layering_conflicts && comp.layering_conflicts.length > 0 ? `
+          <div class="card" style="margin-top: 24px; border: 1.5px solid rgba(239, 68, 68, 0.4); background: rgba(254, 242, 242, 0.7);">
+            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+              <span style="font-size: 1.2rem;">⚠️</span>
+              <h4 style="font-family: var(--font-serif); font-size: 1.15rem; color: #DC2626; margin: 0;">Knowledge Graph Layering Alert: Active Collision</h4>
+            </div>
+            <p style="font-size: 0.9rem; color: #991B1B; margin-bottom: 12px;">Our ingredient knowledge graph detected chemical contraindications if these two products are applied simultaneously:</p>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              ${comp.layering_conflicts.map(c => `
+                <div style="padding: 10px 14px; background: #FFF; border-radius: 8px; border-left: 4px solid #DC2626;">
+                  <strong style="color: #991B1B; font-size: 0.9rem;">${escapeHtml(c.title)}</strong>
+                  <div style="font-size: 0.85rem; color: var(--text-secondary); margin: 3px 0;"><strong>Mechanism:</strong> ${escapeHtml(c.mechanism)}</div>
+                  <div style="font-size: 0.85rem; color: #047857;"><strong>Dermatologist Recommendation:</strong> ${escapeHtml(c.recommendation)}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        ` : `
+          <div class="card" style="margin-top: 24px; border: 1px solid rgba(16, 185, 129, 0.3); background: rgba(240, 253, 244, 0.6); padding: 16px 20px;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 1.1rem;">✅</span>
+              <span style="font-size: 0.92rem; color: #065F46; font-weight: 600;">Knowledge Graph Verification: No hostile active contraindications detected between these formulations. Safe to layer or alternate.</span>
+            </div>
+          </div>
+        `}
 
         <div class="verdict-box">
           <div class="verdict-title">🌟 Algorithmic Recommendation Verdict</div>
@@ -219,7 +255,7 @@
             if (data.results && data.results.length > 0) {
               dropdownEl.innerHTML = data.results.map(r => `
                 <div class="suggestion-item" data-id="${r.product_id}" data-title="${escapeHtml(r.product_name)} (${escapeHtml(r.brand)})" style="padding: 10px 14px; cursor: pointer; border-bottom: 1px solid var(--border-soft); font-size: 0.9rem;">
-                  <strong>${escapeHtml(r.product_name)}</strong> <span style="color: var(--primary-rose); font-size: 0.82rem;">(${escapeHtml(r.brand)})</span>
+                  <strong>${escapeHtml(r.product_name)}</strong> <span style="color: var(--primary-rose); font-size: 0.82rem;">(${escapeHtml(r.brand)} &bull; ${r.price_inr ? '₹' + Math.round(r.price_inr).toLocaleString() : ''})</span>
                 </div>
               `).join('');
 

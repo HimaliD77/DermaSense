@@ -48,12 +48,18 @@ class DermaSenseExplainer:
     """
     
     @staticmethod
-    def explain_recommendation(product_row, user_skin_type=None, user_concerns=None, max_budget_usd=None):
-        """Generates a structured explanation dictionary and readable narrative."""
+    def explain_recommendation(product_row, user_skin_type=None, user_concerns=None, max_budget_inr=None, max_budget_usd=None):
+        """Generates a structured explanation dictionary and readable narrative in INR."""
         pname = product_row.get('product_name', 'This product')
         brand = product_row.get('brand', '')
         category = product_row.get('category', 'Skincare')
-        price_usd = product_row.get('price_usd')
+        
+        price_inr = product_row.get('price_inr')
+        if pd.isna(price_inr) and pd.notna(product_row.get('price_usd')):
+            price_inr = round(product_row.get('price_usd') * 86.5)
+            
+        if max_budget_inr is None and max_budget_usd is not None:
+            max_budget_inr = max_budget_usd * 86.5
         
         try:
             prod_benefits = json.loads(product_row.get('matched_benefits', '[]')) if isinstance(product_row.get('matched_benefits'), str) else (product_row.get('matched_benefits') or [])
@@ -124,14 +130,29 @@ class DermaSenseExplainer:
             
         # 5. Budget & Price Rationale
         budget_note = ""
-        if pd.notna(price_usd) and price_usd > 0:
-            if max_budget_usd and price_usd <= max_budget_usd:
-                budget_note = f"Priced at **${price_usd:.2f}**, which fits within your ${max_budget_usd:.2f} budget."
+        if pd.notna(price_inr) and price_inr > 0:
+            if max_budget_inr and price_inr <= max_budget_inr:
+                budget_note = f"Priced at **₹{price_inr:,.0f}**, which comfortably fits within your ₹{max_budget_inr:,.0f} budget."
             else:
-                budget_note = f"Priced at **${price_usd:.2f}**."
+                budget_note = f"Priced at **₹{price_inr:,.0f}**."
         else:
             budget_note = "Check platform for current pricing."
             
+        # 6. Graph Evidence & Provenance Tracing
+        graph_evidence = {
+            'has_graph_evidence': False,
+            'grounding_score': 0.0,
+            'verified_paths_count': 0,
+            'reasoning_paths': [],
+            'contraindications': []
+        }
+        try:
+            from src.knowledge_graph.graph import IngredientKnowledgeGraph
+            kg = IngredientKnowledgeGraph.get_instance()
+            graph_evidence = kg.get_graph_evidence_card(product_row, user_concerns)
+        except Exception as e:
+            pass
+
         # Summary narrative
         narrative_parts = [
             f"**{pname}** by **{brand}** is recommended as a top-performing **{category}**."
@@ -146,6 +167,20 @@ class DermaSenseExplainer:
             narrative_parts.append("Sentiment Insights:\n" + "\n".join([f"  - {h}" for h in sentiment_highlights]))
         if budget_note:
             narrative_parts.append(f"Pricing: {budget_note}")
+
+        # Add clinical citations if available
+        citations = []
+        for path in graph_evidence.get('reasoning_paths', []):
+            for cit in path.get('citations', []):
+                citations.append(f"{cit.get('citation_id', 'Citation')}: {cit.get('title', '')} ({cit.get('journal', '')}, {cit.get('year', '')})")
+        if citations:
+            unique_citations = list(dict.fromkeys(citations))
+            narrative_parts.append("Clinical Literature Evidence:\n" + "\n".join([f"  - {c}" for c in unique_citations[:2]]))
+
+        # Add cautions if detected
+        if graph_evidence.get('contraindications'):
+            caution_lines = [f"⚠️ {c.get('title')}: {c.get('recommendation')}" for c in graph_evidence['contraindications']]
+            narrative_parts.append("Usage Precautions:\n" + "\n".join([f"  - {cl}" for cl in caution_lines]))
             
         full_explanation_text = "\n\n".join(narrative_parts)
         
@@ -161,6 +196,7 @@ class DermaSenseExplainer:
             'top_positive_themes': pos_themes,
             'top_negative_themes': neg_themes,
             'budget_note': budget_note,
+            'graph_evidence': graph_evidence,
             'full_narrative': full_explanation_text
         }
 

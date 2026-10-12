@@ -1,0 +1,132 @@
+{
+  "summary": {
+    "total_personas": 10,
+    "mean_avoidance_accuracy_percent": 100.0,
+    "mean_positive_alignment_percent": 68.0,
+    "mean_brand_diversity": 3.8,
+    "adaptation_rate_iter1_percent": 100.0,
+    "total_disliked_eliminated_percent": 100.0
+  },
+  "persona_breakdown": [
+    {
+      "persona_id": "persona_01",
+      "name": "BHA-Intolerant Acne Fighter",
+      "cold_start_disliked_in_top5": 5,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 2,
+      "final_liked_in_top5": 0,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 0.0,
+      "unique_brands": 5
+    },
+    {
+      "persona_id": "persona_02",
+      "name": "Retinol-Sensitive Mature Skin",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 2,
+      "final_liked_in_top5": 5,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 1.0,
+      "unique_brands": 4
+    },
+    {
+      "persona_id": "persona_03",
+      "name": "Budget Barrier SOS Student",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 3,
+      "final_liked_in_top5": 4,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 0.8,
+      "unique_brands": 2
+    },
+    {
+      "persona_id": "persona_04",
+      "name": "Hyperpigmentation Brightening Seeker",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 2,
+      "final_liked_in_top5": 3,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 0.6,
+      "unique_brands": 4
+    },
+    {
+      "persona_id": "persona_05",
+      "name": "Eczema-Prone Reactive Barrier",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 3,
+      "final_liked_in_top5": 5,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 1.0,
+      "unique_brands": 3
+    },
+    {
+      "persona_id": "persona_06",
+      "name": "Ultra-Oily Lightweight Gel Minimalist",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 0,
+      "final_liked_in_top5": 0,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 0.0,
+      "unique_brands": 5
+    },
+    {
+      "persona_id": "persona_07",
+      "name": "Prestige Anti-Aging Aficionado",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 1,
+      "final_liked_in_top5": 5,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 1.0,
+      "unique_brands": 5
+    },
+    {
+      "persona_id": "persona_08",
+      "name": "Gentle Micro-Exfoliation Sensitive",
+      "cold_start_disliked_in_top5": 1,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 2,
+      "final_liked_in_top5": 2,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 0.4,
+      "unique_brands": 4
+    },
+    {
+      "persona_id": "persona_09",
+      "name": "Persistent Rosacea & Redness",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 2,
+      "final_liked_in_top5": 5,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 1.0,
+      "unique_brands": 3
+    },
+    {
+      "persona_id": "persona_10",
+      "name": "Dehydrated Multi-Molecular Layering",
+      "cold_start_disliked_in_top5": 0,
+      "iter1_disliked_in_top5": 0,
+      "final_disliked_in_top5": 0,
+      "cold_start_liked_in_top5": 4,
+      "final_liked_in_top5": 5,
+      "avoidance_accuracy": 1.0,
+      "positive_alignment": 1.0,
+      "unique_brands": 3
+    }
+  ]
+}

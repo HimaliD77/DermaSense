@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DermaSense — Skin Profile & Consultation</title>
-  <meta name="description" content="Personalized AI skincare consultation to identify your skin type, target concerns, and recommended formulations.">
+  <meta name="description" content="Personalized AI skincare consultation to identify your skin type, target concerns, and recommended formulations in INR.">
   <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/dermasense_favicon.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png?v=2">
+  <link rel="shortcut icon" href="/favicon.ico?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png?v=2">
 </head>
 <body>
 
@@ -16,9 +20,12 @@
 
   <div class="container">
     
-    <!-- Header & Branding -->
+    <!-- Header & Branding with Uncluttered Botanical Emblem -->
     <header class="header">
-      <div class="brand-badge">🌿 Scientific Skin Intelligence</div>
+      <div class="brand-logo-container">
+        <img src="/static/images/dermasense_emblem.png" alt="DermaSense Botanical Emblem" class="brand-logo-img">
+      </div>
+      <div class="brand-tagline">Personalized • Explainable • Intelligent Skincare</div>
       <h1 class="brand-title">Derma<span>Sense</span></h1>
       <p class="brand-subtitle">
         Tell us about your skin to receive transparent, AI-driven recommendations backed by active ingredient chemistry and 1.2M verified customer experiences.
@@ -41,157 +48,376 @@
       </nav>
     </header>
 
-    <!-- Main Intake Form Card -->
+    <!-- Main View Area -->
     <main>
-      <section class="card intake-card" aria-labelledby="profile-heading">
-        <div style="text-align: center; margin-bottom: 28px;">
-          <h2 id="profile-heading" class="card-header-title" style="font-size: 2rem;">Build Your Custom Skin Profile</h2>
-          <p class="card-header-desc" style="max-width: 600px; margin: 0 auto;">
-            Our algorithm evaluates 16,110 products across Sephora, Amazon, and Flipkart to pinpoint the safest and most effective formulations for your skin.
-          </p>
+      
+      <!-- 1. FRONT / LANDING PAGE: Name & Consultation Welcome Card -->
+      <section class="welcome-hero-card" id="welcomeSection" aria-labelledby="welcome-heading">
+        <div class="welcome-badge">🌿 AI Clinical Skincare Intelligence</div>
+        <h2 id="welcome-heading" class="welcome-title">Welcome to Your Personal Skin Consultation</h2>
+        <p class="welcome-subtitle">
+          Discover scientifically verified formulations tailored specifically to your skin biology, concerns, and budget in INR (₹).
+        </p>
+
+        <!-- Trust Pillars & Capabilities Grid -->
+        <div class="trust-pillars-grid">
+          <div class="trust-pillar-item">
+            <span class="trust-pillar-icon">🌸</span>
+            <div class="trust-pillar-title">16,110+ Formulations</div>
+            <div class="trust-pillar-desc">Deep catalog analysis across Sephora, Amazon & Flipkart</div>
+          </div>
+          <div class="trust-pillar-item">
+            <span class="trust-pillar-icon">🔬</span>
+            <div class="trust-pillar-title">Clinical Knowledge Graph</div>
+            <div class="trust-pillar-desc">Peer-reviewed bio-actives, contraindications & layering safety</div>
+          </div>
+          <div class="trust-pillar-item">
+            <span class="trust-pillar-icon">🇮🇳</span>
+            <div class="trust-pillar-title">Calibrated in INR (₹)</div>
+            <div class="trust-pillar-desc">Transparent Indian market pricing & localized skin suitability</div>
+          </div>
         </div>
 
-        <form id="skinProfileForm" onsubmit="handleProfileSubmit(event)">
+        <!-- Name Intake Box -->
+        <div class="name-intake-box">
+          <label class="form-label" for="userNameInput" style="font-size: 1.05rem; margin-bottom: 4px;">
+            What should we call you?
+            <span>(Personalizes your formulation matches & AM/PM routines)</span>
+          </label>
+          <div class="name-input-wrapper">
+            <span class="name-input-icon">👤</span>
+            <input 
+              type="text" 
+              id="userNameInput" 
+              class="name-input-field" 
+              placeholder="Enter your name (e.g. Ananya, Rahul, Maya)..."
+              autocomplete="name"
+              maxlength="40"
+            >
+          </div>
 
-          <!-- 1. Skin Type Selector -->
-          <div class="form-section">
-            <label class="form-label">
-              1. What is your primary Skin Type? 
-              <span>(Ensures satisfaction benchmarks from users with your exact skin type)</span>
-            </label>
-            <div class="skin-type-grid" id="skinTypeSelector">
-              <button type="button" class="skin-type-btn" data-type="oily" id="btnSkinOily">
-                🌿 Oily
-                <span class="skin-type-desc">Excess shine, enlarged pores</span>
-              </button>
-              <button type="button" class="skin-type-btn" data-type="dry" id="btnSkinDry">
-                💧 Dry
-                <span class="skin-type-desc">Tightness, flakiness, dullness</span>
-              </button>
-              <button type="button" class="skin-type-btn" data-type="combination" id="btnSkinCombo">
-                ⚖️ Combination
-                <span class="skin-type-desc">Oily T-zone, normal/dry cheeks</span>
-              </button>
-              <button type="button" class="skin-type-btn" data-type="normal" id="btnSkinNormal">
-                ✨ Normal
-                <span class="skin-type-desc">Balanced, comfortable skin</span>
-              </button>
+          <button type="button" class="btn-primary" id="btnStartConsultation" style="font-size: 1.05rem;">
+            <span>🌸</span> Begin Skin Consultation &rarr;
+          </button>
+
+          <p style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin-top: 14px; margin-bottom: 0;">
+            Takes ~60 seconds • Your answers adapt in real time • No account required
+          </p>
+        </div>
+      </section>
+
+      <!-- 2. GUIDED CONSULTATION WIZARD: Asking User Preferences Step-by-Step -->
+      <section class="wizard-container" id="wizardSection" aria-label="Personalized Skincare Consultation Questionnaire">
+        
+        <!-- Wizard Navigation & Progress Header -->
+        <div class="wizard-header-card">
+          <div class="wizard-meta-row">
+            <div class="wizard-user-badge">
+              <span>👤</span> Consultation for: <strong id="wizardGreetingName" style="color: var(--primary-rose);">Friend</strong>
+              <button type="button" class="wizard-change-name-btn" id="btnChangeName" title="Change your name">Change</button>
+            </div>
+            <div class="wizard-step-counter" id="stepCounterBadge">
+              Step 1 of 4: Skin Type
             </div>
           </div>
 
-          <!-- 2. Primary Skin Concerns -->
-          <div class="form-section">
-            <label class="form-label">
-              2. Select Your Target Skin Concerns 
-              <span>(Choose all that apply)</span>
-            </label>
-            <div class="concerns-flex" id="concernsSelector">
-              <button type="button" class="concern-pill" data-concern="Hydration & Barrier">💧 Hydration & Barrier</button>
-              <button type="button" class="concern-pill" data-concern="Acne & Blemish Control">🎯 Acne & Blemishes</button>
-              <button type="button" class="concern-pill" data-concern="Brightening & Tone">✨ Brightening & Tone</button>
-              <button type="button" class="concern-pill" data-concern="Anti-Aging & Firming">⏳ Anti-Aging & Firming</button>
-              <button type="button" class="concern-pill" data-concern="Soothing & Anti-Redness">🌸 Calming & Redness</button>
-              <button type="button" class="concern-pill" data-concern="Sun Protection">☀️ Sun Protection</button>
-              <button type="button" class="concern-pill" data-concern="Oil & Pore Control">🫧 Oil & Pore Control</button>
-              <button type="button" class="concern-pill" data-concern="Exfoliation & Texture">🍃 Exfoliation & Texture</button>
+          <!-- Clickable Stepper Nodes -->
+          <div class="wizard-stepper-nav" id="wizardStepperNav">
+            <div class="stepper-node active" data-step="1" id="stepNode1">
+              <span class="stepper-num">1</span>
+              <span>Skin Type</span>
+            </div>
+            <div class="stepper-node" data-step="2" id="stepNode2">
+              <span class="stepper-num">2</span>
+              <span>Concerns</span>
+            </div>
+            <div class="stepper-node" data-step="3" id="stepNode3">
+              <span class="stepper-num">3</span>
+              <span>Budget & Category</span>
+            </div>
+            <div class="stepper-node" data-step="4" id="stepNode4">
+              <span class="stepper-num">4</span>
+              <span>Preferences</span>
             </div>
           </div>
 
-          <!-- 3. Category, Budget, AI Focus -->
-          <div class="controls-grid">
-            <div>
-              <label class="form-label" for="categorySelect">Product Category</label>
-              <select id="categorySelect" class="select-input">
-                <option value="All">All Categories</option>
-                <option value="Cleanser">Cleanser</option>
-                <option value="Moisturizer">Moisturizer</option>
-                <option value="Treatment & Serum">Treatment & Serum</option>
-                <option value="Sunscreen">Sunscreen</option>
-                <option value="Eye Cream">Eye Cream</option>
-                <option value="Mask">Mask</option>
-              </select>
-            </div>
+          <!-- Progress Bar -->
+          <div class="wizard-progress-track">
+            <div class="wizard-progress-fill" id="wizardProgressBar" style="width: 25%;"></div>
+          </div>
+        </div>
 
-            <div>
-              <label class="form-label" for="budgetSlider">Maximum Budget (USD)</label>
-              <div class="slider-container">
-                <input type="range" id="budgetSlider" class="range-slider" min="10" max="200" step="5" value="60">
-                <span class="slider-val" id="budgetDisplay">$60</span>
+        <!-- Wizard Intake Card -->
+        <div class="card" style="padding: 36px 32px;">
+          <form id="skinProfileForm" onsubmit="handleProfileSubmit(event)">
+
+            <!-- STEP 1 PANE: Primary Skin Type -->
+            <div class="wizard-step-pane active" id="stepPane1">
+              <div style="margin-bottom: 24px;">
+                <h3 class="card-header-title" style="font-size: 1.8rem; margin-bottom: 8px;">
+                  1. What is your primary Skin Type?
+                </h3>
+                <p class="card-header-desc" style="margin-bottom: 0;">
+                  How does your skin typically feel 2–3 hours after cleansing? This ensures your formulation recommendations are matched with user satisfaction benchmarks matching your exact biology.
+                </p>
+              </div>
+
+              <div class="skin-type-grid" id="skinTypeSelector" style="margin-bottom: 10px;">
+                <button type="button" class="skin-type-btn" data-type="oily" id="btnSkinOily">
+                  🌿 Oily
+                  <span class="skin-type-desc">Excess shine, enlarged pores, prone to breakouts</span>
+                </button>
+                <button type="button" class="skin-type-btn" data-type="dry" id="btnSkinDry">
+                  💧 Dry
+                  <span class="skin-type-desc">Tightness, flakiness, dullness, low natural sebum</span>
+                </button>
+                <button type="button" class="skin-type-btn" data-type="combination" id="btnSkinCombo">
+                  ⚖️ Combination
+                  <span class="skin-type-desc">Oily T-zone (forehead, nose), normal or dry cheeks</span>
+                </button>
+                <button type="button" class="skin-type-btn" data-type="normal" id="btnSkinNormal">
+                  ✨ Normal
+                  <span class="skin-type-desc">Balanced, comfortable skin, rarely prone to excess oil</span>
+                </button>
+              </div>
+
+              <!-- Step 1 Navigation -->
+              <div class="wizard-nav-btns">
+                <button type="button" class="btn-secondary" id="btnStep1Back">
+                  <span>&larr;</span> Back to Welcome
+                </button>
+                <button type="button" class="btn-wizard-next" id="btnStep1Next">
+                  Next: Choose Target Concerns <span>&rarr;</span>
+                </button>
               </div>
             </div>
 
-            <div>
-              <label class="form-label" for="presetSelect">AI Scoring Focus</label>
-              <select id="presetSelect" class="select-input">
-                <option value="balanced">Balanced (Holistic AI)</option>
-                <option value="ingredient_focus">Active Ingredient Focus</option>
-                <option value="review_focus">Review & Satisfaction Focus</option>
-                <option value="budget_focus">Best Value & Budget Focus</option>
-              </select>
+            <!-- STEP 2 PANE: Target Skin Concerns -->
+            <div class="wizard-step-pane" id="stepPane2">
+              <div style="margin-bottom: 24px;">
+                <h3 class="card-header-title" style="font-size: 1.8rem; margin-bottom: 8px;">
+                  2. Select Your Target Skin Concerns
+                </h3>
+                <p class="card-header-desc" style="margin-bottom: 0;">
+                  Select all that apply. Our clinical knowledge graph cross-references bio-active ingredients (like Niacinamide, Centella, Salicylic Acid, Retinoids) that directly treat these targets.
+                </p>
+              </div>
+
+              <div class="concerns-flex" id="concernsSelector" style="margin-bottom: 12px;">
+                <button type="button" class="concern-pill" data-concern="Hydration & Barrier">💧 Hydration & Barrier</button>
+                <button type="button" class="concern-pill" data-concern="Acne & Blemish Control">🎯 Acne & Blemishes</button>
+                <button type="button" class="concern-pill" data-concern="Brightening & Tone">✨ Brightening & Tone</button>
+                <button type="button" class="concern-pill" data-concern="Anti-Aging & Firming">⏳ Anti-Aging & Firming</button>
+                <button type="button" class="concern-pill" data-concern="Soothing & Anti-Redness">🌸 Calming & Redness</button>
+                <button type="button" class="concern-pill" data-concern="Sun Protection">☀️ Sun Protection</button>
+                <button type="button" class="concern-pill" data-concern="Oil & Pore Control">🫧 Oil & Pore Control</button>
+                <button type="button" class="concern-pill" data-concern="Exfoliation & Texture">🍃 Exfoliation & Texture</button>
+              </div>
+
+              <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 14px;">
+                💡 <span id="concernsCountText">2 concerns currently selected</span>
+              </p>
+
+              <!-- Step 2 Navigation -->
+              <div class="wizard-nav-btns">
+                <button type="button" class="btn-secondary" id="btnStep2Back">
+                  <span>&larr;</span> Back to Skin Type
+                </button>
+                <button type="button" class="btn-wizard-next" id="btnStep2Next">
+                  Next: Category & Budget <span>&rarr;</span>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <!-- 4. Specific Preferences Query -->
-          <div class="form-section">
-            <label class="form-label" for="queryInput">
-              3. Specific Texture, Brand, or Ingredient Preferences 
-              <span>(Optional)</span>
-            </label>
-            <div class="query-box">
-              <span class="query-icon">🔍</span>
-              <input type="text" id="queryInput" class="query-input" placeholder="e.g. lightweight gel moisturizer with centella and ceramides, no heavy scent...">
+            <!-- STEP 3 PANE: Product Category & Budget (INR ₹) -->
+            <div class="wizard-step-pane" id="stepPane3">
+              <div style="margin-bottom: 24px;">
+                <h3 class="card-header-title" style="font-size: 1.8rem; margin-bottom: 8px;">
+                  3. Product Category & Budget (INR ₹)
+                </h3>
+                <p class="card-header-desc" style="margin-bottom: 0;">
+                  Tailor your search to specific regimen steps and your preferred budget in Indian Rupees.
+                </p>
+              </div>
+
+              <div class="controls-grid" style="margin-bottom: 20px;">
+                <div>
+                  <label class="form-label" for="categorySelect">Product Category</label>
+                  <select id="categorySelect" class="select-input">
+                    <option value="All">All Categories</option>
+                    <option value="Cleanser">Cleanser</option>
+                    <option value="Moisturizer">Moisturizer</option>
+                    <option value="Treatment & Serum">Treatment & Serum</option>
+                    <option value="Sunscreen">Sunscreen</option>
+                    <option value="Eye Cream">Eye Cream</option>
+                    <option value="Mask">Mask</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label class="form-label" for="budgetSlider">Maximum Budget (INR ₹)</label>
+                  <div class="slider-container">
+                    <input type="range" id="budgetSlider" class="range-slider" min="500" max="15000" step="250" value="4000">
+                    <span class="slider-val" id="budgetDisplay">₹4,000</span>
+                  </div>
+                </div>
+
+                <div>
+                  <label class="form-label" for="presetSelect">AI Scoring Focus</label>
+                  <select id="presetSelect" class="select-input">
+                    <option value="balanced">Balanced (Holistic AI)</option>
+                    <option value="ingredient_focus">Active Ingredient Focus</option>
+                    <option value="review_focus">Review & Satisfaction Focus</option>
+                    <option value="budget_focus">Best Value & Budget Focus</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Step 3 Navigation -->
+              <div class="wizard-nav-btns">
+                <button type="button" class="btn-secondary" id="btnStep3Back">
+                  <span>&larr;</span> Back to Concerns
+                </button>
+                <button type="button" class="btn-wizard-next" id="btnStep3Next">
+                  Next: Specific Preferences <span>&rarr;</span>
+                </button>
+              </div>
             </div>
-          </div>
 
-          <!-- Submit Button -->
-          <button type="submit" class="btn-primary" id="btnSubmitProfile" style="margin-top: 10px;">
-            <span>🌸</span> Reveal My Personalized Recommendations
-          </button>
+            <!-- STEP 4 PANE: Specific Preferences & Review -->
+            <div class="wizard-step-pane" id="stepPane4">
+              <div style="margin-bottom: 20px;">
+                <h3 class="card-header-title" style="font-size: 1.8rem; margin-bottom: 8px;">
+                  4. Specific Preferences & Ingredient Notes
+                </h3>
+                <p class="card-header-desc" style="margin-bottom: 0;">
+                  Optional: Mention preferred textures, must-have active ingredients, or preferences like fragrance-free formulas.
+                </p>
+              </div>
 
-        </form>
+              <div class="query-box" style="margin-bottom: 8px;">
+                <span class="query-icon">🔍</span>
+                <input 
+                  type="text" 
+                  id="queryInput" 
+                  class="query-input" 
+                  placeholder="e.g. lightweight gel moisturizer with centella and ceramides, no heavy scent..."
+                >
+              </div>
+
+              <!-- Quick Click Suggestion Chips -->
+              <div style="margin-bottom: 20px;">
+                <div style="font-size: 0.82rem; font-weight: 600; color: var(--text-muted); margin-bottom: 6px;">
+                  Quick Add Keywords:
+                </div>
+                <div class="suggestion-chips" id="suggestionChips">
+                  <span class="suggestion-chip" data-text="fragrance-free">+ Fragrance-free</span>
+                  <span class="suggestion-chip" data-text="lightweight gel">+ Lightweight Gel</span>
+                  <span class="suggestion-chip" data-text="niacinamide">+ Niacinamide</span>
+                  <span class="suggestion-chip" data-text="ceramides">+ Ceramides</span>
+                  <span class="suggestion-chip" data-text="salicylic acid">+ Salicylic Acid</span>
+                  <span class="suggestion-chip" data-text="centella asiatica">+ Centella / Cica</span>
+                  <span class="suggestion-chip" data-text="non-comedogenic">+ Non-comedogenic</span>
+                </div>
+              </div>
+
+              <!-- Live Profile Summary Snapshot Before Submission -->
+              <div class="consultation-summary-box">
+                <div class="summary-box-title">📋 Summary of Your Skin Profile</div>
+                <div class="summary-chips-row" id="profileSummaryBadges">
+                  <!-- Filled dynamically by JS -->
+                </div>
+              </div>
+
+              <!-- Step 4 Navigation & Final Submit -->
+              <div class="wizard-nav-btns">
+                <button type="button" class="btn-secondary" id="btnStep4Back">
+                  <span>&larr;</span> Back to Budget
+                </button>
+                <button type="submit" class="btn-primary" id="btnSubmitProfile" style="width: auto; padding: 14px 34px;">
+                  <span>✨</span> Reveal My Personalized Recommendations &rarr;
+                </button>
+              </div>
+            </div>
+
+          </form>
+        </div>
+
       </section>
+
     </main>
 
   </div>
 
   <script>
-    // Profile Intake State
+    // Profile Intake State in INR (₹)
+    let currentStep = 1;
+    let userName = localStorage.getItem('dermasense_user_name') || '';
     let selectedSkinType = localStorage.getItem('dermasense_skin_type') || 'oily';
     let selectedConcerns = new Set(JSON.parse(localStorage.getItem('dermasense_concerns') || '["Hydration & Barrier", "Acne & Blemish Control"]'));
-    let selectedBudget = Number(localStorage.getItem('dermasense_budget') || 60);
+    let selectedBudget = Number(localStorage.getItem('dermasense_budget') || 4000);
+    let selectedCategory = localStorage.getItem('dermasense_category') || 'All';
+    let selectedPreset = localStorage.getItem('dermasense_preset') || 'balanced';
+    let selectedQuery = localStorage.getItem('dermasense_query') || '';
 
     document.addEventListener('DOMContentLoaded', () => {
-      // Sync UI with saved state
+      const welcomeSection = document.getElementById('welcomeSection');
+      const wizardSection = document.getElementById('wizardSection');
+      const userNameInput = document.getElementById('userNameInput');
+      const wizardGreetingName = document.getElementById('wizardGreetingName');
+      const btnStartConsultation = document.getElementById('btnStartConsultation');
+      const btnChangeName = document.getElementById('btnChangeName');
+
+      // Pre-fill user name if previously saved
+      if (userName) {
+        userNameInput.value = userName;
+        wizardGreetingName.textContent = userName;
+      }
+
+      // Sync skin type
       if (selectedSkinType) {
         const btn = document.querySelector(`.skin-type-btn[data-type="${selectedSkinType}"]`);
         if (btn) btn.classList.add('active');
       }
 
+      // Sync concerns
       selectedConcerns.forEach(c => {
         const pill = document.querySelector(`.concern-pill[data-concern="${c}"]`);
         if (pill) pill.classList.add('active');
       });
+      updateConcernsCount();
 
+      // Sync controls
+      const categorySelect = document.getElementById('categorySelect');
+      const presetSelect = document.getElementById('presetSelect');
+      const queryInput = document.getElementById('queryInput');
       const budgetSlider = document.getElementById('budgetSlider');
       const budgetDisplay = document.getElementById('budgetDisplay');
+
+      if (categorySelect) categorySelect.value = selectedCategory;
+      if (presetSelect) presetSelect.value = selectedPreset;
+      if (queryInput) queryInput.value = selectedQuery;
+
       budgetSlider.value = selectedBudget;
-      budgetDisplay.textContent = `$${selectedBudget}`;
+      budgetDisplay.textContent = `₹${selectedBudget.toLocaleString()}`;
 
       budgetSlider.addEventListener('input', (e) => {
         selectedBudget = Number(e.target.value);
-        budgetDisplay.textContent = `$${selectedBudget}`;
+        budgetDisplay.textContent = `₹${selectedBudget.toLocaleString()}`;
+        updateSummaryReview();
       });
 
-      // Skin type selection
+      // Skin type button handlers
       document.querySelectorAll('.skin-type-btn').forEach(btn => {
         btn.addEventListener('click', () => {
           document.querySelectorAll('.skin-type-btn').forEach(b => b.classList.remove('active'));
           selectedSkinType = btn.getAttribute('data-type');
           btn.classList.add('active');
+          updateSummaryReview();
         });
       });
 
-      // Concerns selection
+      // Concern pill handlers
       document.querySelectorAll('.concern-pill').forEach(pill => {
         pill.addEventListener('click', () => {
           const concern = pill.getAttribute('data-concern');
@@ -202,9 +428,170 @@
             selectedConcerns.add(concern);
             pill.classList.add('active');
           }
+          updateConcernsCount();
+          updateSummaryReview();
+        });
+      });
+
+      // Quick add keyword suggestion chips
+      document.querySelectorAll('.suggestion-chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const addText = chip.getAttribute('data-text');
+          const currentVal = queryInput.value.trim();
+          if (!currentVal) {
+            queryInput.value = addText;
+          } else if (!currentVal.toLowerCase().includes(addText.toLowerCase())) {
+            queryInput.value = `${currentVal}, ${addText}`;
+          }
+          queryInput.focus();
+        });
+      });
+
+      // Front Page "Begin Consultation" Trigger
+      btnStartConsultation.addEventListener('click', () => {
+        startConsultationFlow();
+      });
+
+      userNameInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          startConsultationFlow();
+        }
+      });
+
+      // Change name from wizard header
+      btnChangeName.addEventListener('click', () => {
+        wizardSection.classList.remove('active');
+        welcomeSection.style.display = 'block';
+        userNameInput.focus();
+        userNameInput.select();
+      });
+
+      // Step Navigation Handlers
+      document.getElementById('btnStep1Back').addEventListener('click', () => {
+        wizardSection.classList.remove('active');
+        welcomeSection.style.display = 'block';
+        welcomeSection.scrollIntoView({ behavior: 'smooth' });
+      });
+
+      document.getElementById('btnStep1Next').addEventListener('click', () => {
+        goToStep(2);
+      });
+
+      document.getElementById('btnStep2Back').addEventListener('click', () => {
+        goToStep(1);
+      });
+
+      document.getElementById('btnStep2Next').addEventListener('click', () => {
+        goToStep(3);
+      });
+
+      document.getElementById('btnStep3Back').addEventListener('click', () => {
+        goToStep(2);
+      });
+
+      document.getElementById('btnStep3Next').addEventListener('click', () => {
+        goToStep(4);
+      });
+
+      document.getElementById('btnStep4Back').addEventListener('click', () => {
+        goToStep(3);
+      });
+
+      // Stepper node clicks
+      document.querySelectorAll('.stepper-node').forEach(node => {
+        node.addEventListener('click', () => {
+          const step = Number(node.getAttribute('data-step'));
+          goToStep(step);
         });
       });
     });
+
+    function startConsultationFlow() {
+      const inputVal = document.getElementById('userNameInput').value.trim();
+      userName = inputVal || 'Friend';
+      localStorage.setItem('dermasense_user_name', userName);
+      
+      document.getElementById('wizardGreetingName').textContent = userName;
+      document.getElementById('welcomeSection').style.display = 'none';
+      const wizardSection = document.getElementById('wizardSection');
+      wizardSection.classList.add('active');
+      goToStep(1);
+    }
+
+    function goToStep(step) {
+      currentStep = step;
+
+      // Update panes
+      for (let i = 1; i <= 4; i++) {
+        const pane = document.getElementById(`stepPane${i}`);
+        if (pane) {
+          if (i === step) pane.classList.add('active');
+          else pane.classList.remove('active');
+        }
+      }
+
+      // Update stepper nodes
+      const stepLabels = ['Skin Type', 'Concerns', 'Budget & Category', 'Preferences'];
+      for (let i = 1; i <= 4; i++) {
+        const node = document.getElementById(`stepNode${i}`);
+        if (node) {
+          node.classList.remove('active', 'completed');
+          if (i === step) {
+            node.classList.add('active');
+          } else if (i < step) {
+            node.classList.add('completed');
+          }
+        }
+      }
+
+      // Update progress bar
+      const progressPercent = step * 25;
+      document.getElementById('wizardProgressBar').style.width = `${progressPercent}%`;
+      document.getElementById('stepCounterBadge').textContent = `Step ${step} of 4: ${stepLabels[step - 1]}`;
+
+      if (step === 4) {
+        updateSummaryReview();
+      }
+
+      // Smooth scroll to top of wizard
+      document.getElementById('wizardSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function updateConcernsCount() {
+      const countEl = document.getElementById('concernsCountText');
+      if (countEl) {
+        const count = selectedConcerns.size;
+        countEl.textContent = count === 0 ? 'No concerns selected yet (general maintenance)' : `${count} target concern${count > 1 ? 's' : ''} selected`;
+      }
+    }
+
+    function updateSummaryReview() {
+      const container = document.getElementById('profileSummaryBadges');
+      if (!container) return;
+
+      const stFormatted = selectedSkinType ? selectedSkinType.charAt(0).toUpperCase() + selectedSkinType.slice(1) : 'Not specified';
+      const concernsList = selectedConcerns.size > 0 ? Array.from(selectedConcerns).join(', ') : 'General Care';
+      const categoryVal = document.getElementById('categorySelect') ? document.getElementById('categorySelect').value : selectedCategory;
+
+      container.innerHTML = `
+        <div class="summary-badge-item">👤 Name: <strong>${escapeHtml(userName || 'Friend')}</strong></div>
+        <div class="summary-badge-item">🌿 Skin Type: <strong>${escapeHtml(stFormatted)}</strong></div>
+        <div class="summary-badge-item">🎯 Concerns: <strong>${escapeHtml(concernsList)}</strong></div>
+        <div class="summary-badge-item">🏷️ Category: <strong>${escapeHtml(categoryVal)}</strong></div>
+        <div class="summary-badge-item">💰 Budget: <strong>₹${selectedBudget.toLocaleString()}</strong></div>
+      `;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
 
     function handleProfileSubmit(e) {
       e.preventDefault();
@@ -213,7 +600,8 @@
       const preset = document.getElementById('presetSelect').value;
       const query = document.getElementById('queryInput').value.trim();
 
-      // Save to localStorage
+      // Save to localStorage in INR
+      localStorage.setItem('dermasense_user_name', userName || '');
       localStorage.setItem('dermasense_skin_type', selectedSkinType || '');
       localStorage.setItem('dermasense_concerns', JSON.stringify(Array.from(selectedConcerns)));
       localStorage.setItem('dermasense_budget', selectedBudget);
@@ -223,6 +611,7 @@
 
       // Construct URL parameters
       const params = new URLSearchParams();
+      if (userName) params.set('user_name', userName);
       if (selectedSkinType) params.set('skin_type', selectedSkinType);
       if (selectedConcerns.size > 0) params.set('concerns', Array.from(selectedConcerns).join('|'));
       if (category) params.set('category', category);

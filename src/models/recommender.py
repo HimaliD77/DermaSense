@@ -18,6 +18,9 @@ PROCESSED_DIR = os.path.join(DERMASENSE_DIR, "data", "processed")
 EMBEDDINGS_DIR = os.path.join(DERMASENSE_DIR, "data", "embeddings")
 
 from src.models.embeddings import ProductEmbedder
+from src.models.reranker import CrossEncoderReranker
+
+USD_TO_INR_RATE = 86.5
 
 WEIGHT_PRESETS = {
     'balanced': {
@@ -57,21 +60,41 @@ WEIGHT_PRESETS = {
 class DermaSenseRecommender:
     """
     Personalized & Explainable Skincare Recommender & Comparison Engine.
-    Combines:
+    Operates in Indian Rupees (INR ₹) and incorporates:
     1. Dense Semantic Vector Embeddings (Sentence Transformers + FAISS)
-    2. Ingredient & Skin Concern Matching (Ontology Overlap)
-    3. User Skin-Type Review Evidence (Skin-partitioned Ratings & Confidence)
-    4. Review Sentiment Polarity & Aspect Highlights
-    5. Price Alignment & Budget Value
-    6. Popularity & Community Love Signal
+    2. Deep-Learning Second-Stage Cross-Encoder Reranking
+    3. Ingredient & Skin Concern Matching (Ontology Overlap)
+    4. User Skin-Type Review Evidence (Skin-partitioned Ratings & Confidence)
+    5. Review Sentiment Polarity & Aspect Highlights
+    6. Price Alignment & Budget Value (INR ₹)
+    7. Popularity & Community Love Signal
     """
     
-    def __init__(self, data_path=None, use_dense_embeddings=True):
+    def __init__(self, data_path=None, use_dense_embeddings=True, use_reranker=True):
         if data_path is None:
             data_path = os.path.join(PROCESSED_DIR, "master_product_features.parquet")
             
         print(f"Initializing DermaSense Recommender with: {data_path}")
         self.df = pd.read_parquet(data_path)
+        
+        # Ensure robust INR pricing across all records
+        if 'price_inr' not in self.df.columns or self.df['price_inr'].isna().all():
+            self.df['price_inr'] = (self.df['price_usd'] * USD_TO_INR_RATE).round(0)
+        else:
+            self.df['price_inr'] = self.df['price_inr'].fillna(self.df['price_usd'] * USD_TO_INR_RATE).round(0)
+            
+        # Pre-parse benefits into list of sets for microsecond lookups
+        def _parse_b(val):
+            if isinstance(val, list):
+                return set(val)
+            if isinstance(val, str):
+                try:
+                    return set(json.loads(val))
+                except Exception:
+                    return set()
+            return set()
+        self.benefits_sets = [_parse_b(v) for v in self.df['matched_benefits']]
+
         self.use_dense_embeddings = use_dense_embeddings
         self.embedder = None
         self.tfidf = None
@@ -95,29 +118,46 @@ class DermaSenseRecommender:
             self.tfidf = TfidfVectorizer(ngram_range=(1, 2), max_features=15000, stop_words='english')
             self.doc_matrix = self.tfidf.fit_transform(self.df['semantic_document'].fillna(""))
             print(f"Loaded {len(self.df):,} products. TF-IDF Matrix shape: {self.doc_matrix.shape}")
+
+        # Initialize Cross-Encoder Reranker
+        self.use_reranker = use_reranker
+        self.reranker = None
+        if self.use_reranker:
+            try:
+                self.reranker = CrossEncoderReranker.get_instance()
+                print("Stage-2 Deep Learning Cross-Encoder Reranker initialized.")
+            except Exception as e:
+                print(f"⚠️ Could not load CrossEncoder reranker: {e}. Continuing without Stage-2 reranking.")
+                self.use_reranker = False
         
     def recommend(self,
                   query="",
                   skin_type=None,
                   target_concerns=None,
                   category=None,
+                  max_price_inr=None,
                   max_price_usd=None,
                   brand_preference=None,
                   preset='balanced',
                   custom_weights=None,
-                  top_k=6):
+                  top_k=6,
+                  use_reranker=None,
+                  user_id=None):
         """
-        Recommends top-k products based on 6-factor personalized scoring.
+        Recommends top-k products based on 6-factor personalized scoring in INR ₹.
         """
         candidates = self.df.copy()
         
+        # If max_price_usd is passed instead, convert to INR
+        if max_price_inr is None and max_price_usd is not None and max_price_usd > 0:
+            max_price_inr = max_price_usd * USD_TO_INR_RATE
+            
         # 1. Hard Filters
         if category and category.lower() not in ['all', 'any', 'all categories']:
             candidates = candidates[candidates['category'].str.lower() == category.lower()]
             
-        if max_price_usd is not None and max_price_usd > 0:
-            # Keep products within budget (or products with missing price as neutral)
-            candidates = candidates[(candidates['price_usd'].isna()) | (candidates['price_usd'] <= max_price_usd * 1.05)]
+        if max_price_inr is not None and max_price_inr > 0:
+            candidates = candidates[(candidates['price_inr'].isna()) | (candidates['price_inr'] <= max_price_inr * 1.05)]
             
         if brand_preference and brand_preference.strip():
             candidates = candidates[candidates['brand'].str.lower().str.contains(brand_preference.lower(), na=False)]
@@ -137,76 +177,57 @@ class DermaSenseRecommender:
         else:
             sim_scores = np.ones(len(candidate_indices)) * 0.5
             
-        # 3. Factor 2: Ingredient Concern Match Score
+        # 3. Factor 2: Ingredient Concern Match Score (Optimized set intersection)
         target_concerns = target_concerns or []
-        concern_scores = []
-        for idx in candidate_indices:
-            row = self.df.iloc[idx]
-            try:
-                prod_benefits = json.loads(row.get('matched_benefits', '[]')) if isinstance(row.get('matched_benefits'), str) else (row.get('matched_benefits') or [])
-            except Exception:
-                prod_benefits = []
-                
-            if target_concerns:
-                overlap = set(target_concerns).intersection(set(prod_benefits))
-                score = len(overlap) / len(target_concerns)
-            else:
-                score = 0.5 if len(prod_benefits) > 0 else 0.0
-            concern_scores.append(score)
-            
-        concern_scores = np.array(concern_scores)
+        if target_concerns:
+            target_set = set(target_concerns)
+            target_len = len(target_concerns)
+            concern_scores = np.array([
+                len(target_set.intersection(self.benefits_sets[idx])) / target_len
+                for idx in candidate_indices
+            ])
+        else:
+            concern_scores = np.array([
+                0.5 if len(self.benefits_sets[idx]) > 0 else 0.0
+                for idx in candidate_indices
+            ])
         
-        # 4. Factor 3: Skin-Type Review Evidence Score
-        skin_type_scores = []
+        # 4. Factor 3: Skin-Type Review Evidence Score (Vectorized)
         st_clean = str(skin_type).lower().strip() if skin_type else ""
-        
-        for idx in candidate_indices:
-            row = self.df.iloc[idx]
-            if st_clean in ['combination', 'dry', 'normal', 'oily']:
-                st_rating = row.get(f'{st_clean}_skin_avg_rating')
-                st_count = row.get(f'{st_clean}_skin_review_count') or 0
-                
-                if pd.notna(st_rating) and st_count > 0:
-                    rating_norm = (float(st_rating) - 1.0) / 4.0
-                    confidence = min(1.0, np.log1p(st_count) / np.log1p(50))
-                    st_score = (0.7 * rating_norm) + (0.3 * confidence)
-                else:
-                    gen_rating = row.get('rating') or 4.0
-                    st_score = ((float(gen_rating) - 1.0) / 4.0) * 0.7
-            else:
-                gen_rating = row.get('rating') or 4.0
-                st_score = ((float(gen_rating) - 1.0) / 4.0)
-                
-            skin_type_scores.append(st_score)
+        if st_clean in ['combination', 'dry', 'normal', 'oily']:
+            st_ratings = candidates[f'{st_clean}_skin_avg_rating'].values
+            st_counts = candidates[f'{st_clean}_skin_review_count'].fillna(0).values
+            gen_ratings = candidates['rating'].fillna(4.0).values
             
-        skin_type_scores = np.array(skin_type_scores)
-        
-        # 5. Factor 4: Sentiment Score
-        sentiment_scores = []
-        for idx in candidate_indices:
-            row = self.df.iloc[idx]
-            if st_clean in ['combination', 'dry', 'normal', 'oily'] and pd.notna(row.get(f'{st_clean}_sentiment_score')):
-                s_score = float(row.get(f'{st_clean}_sentiment_score'))
-            else:
-                s_score = float(row.get('sentiment_score') if pd.notna(row.get('sentiment_score')) else 0.70)
-            sentiment_scores.append(s_score)
-        sentiment_scores = np.array(sentiment_scores)
-        
-        # 6. Factor 5: Price Alignment Score
-        price_scores = []
-        for idx in candidate_indices:
-            row = self.df.iloc[idx]
-            p = row.get('price_usd')
-            if pd.notna(p) and p > 0:
-                if max_price_usd and max_price_usd > 0:
-                    # Closer to 0 price relative to max_budget gets higher value score
-                    p_score = 1.0 - min(1.0, float(p) / float(max_price_usd))
-                else:
-                    p_score = 0.5
-            else:
-                p_score = 0.5
-            price_scores.append(p_score)
-        price_scores = np.array(price_scores)
+            has_reviews = (~np.isnan(st_ratings)) & (st_counts > 0)
+            rating_norm = np.where(has_reviews, (st_ratings - 1.0) / 4.0, 0.0)
+            confidence = np.clip(np.log1p(st_counts) / np.log1p(50), 0.0, 1.0)
+            st_score_with_rev = (0.7 * rating_norm) + (0.3 * confidence)
+            st_score_fallback = ((gen_ratings - 1.0) / 4.0) * 0.7
+            
+            skin_type_scores = np.where(has_reviews, st_score_with_rev, st_score_fallback)
+        else:
+            gen_ratings = candidates['rating'].fillna(4.0).values
+            skin_type_scores = (gen_ratings - 1.0) / 4.0
+            
+        # 5. Factor 4: Sentiment Score (Vectorized)
+        if st_clean in ['combination', 'dry', 'normal', 'oily'] and f'{st_clean}_sentiment_score' in candidates.columns:
+            st_senti = candidates[f'{st_clean}_sentiment_score'].values
+            gen_senti = candidates['sentiment_score'].fillna(0.70).values
+            sentiment_scores = np.where(~np.isnan(st_senti), st_senti, gen_senti)
+        else:
+            sentiment_scores = candidates['sentiment_score'].fillna(0.70).values
+            
+        # 6. Factor 5: Price Alignment Score in INR (Vectorized)
+        p_vals = candidates['price_inr'].values
+        if max_price_inr and max_price_inr > 0:
+            price_scores = np.where(
+                (~np.isnan(p_vals)) & (p_vals > 0),
+                1.0 - np.clip(p_vals / float(max_price_inr), 0.0, 1.0),
+                0.5
+            )
+        else:
+            price_scores = np.full(len(candidates), 0.5)
         
         # 7. Factor 6: Popularity & Base Quality Score
         base_ratings = candidates['rating'].fillna(4.0).values / 5.0
@@ -232,14 +253,74 @@ class DermaSenseRecommender:
         candidates['skin_evidence_score'] = skin_type_scores.round(3)
         candidates['sentiment_score_calc'] = sentiment_scores.round(3)
         candidates['price_score_calc'] = price_scores.round(3)
+        candidates['popularity_score_calc'] = popularity_scores.round(3)
         candidates['composite_score'] = composite_score.round(3)
-        
+        candidates['match_percentage'] = np.clip(np.nan_to_num(np.round(composite_score * 100), nan=80.0), 50, 99).astype(int)
+        candidates['rerank_score'] = np.nan
+
+        # Stage 2: Deep-Learning Cross-Encoder Reranking
+        should_rerank = (
+            (use_reranker if use_reranker is not None else self.use_reranker)
+            and bool(query and query.strip())
+            and (self.reranker is not None and self.reranker.is_available)
+        )
+
+        if should_rerank and len(candidates) > 0:
+            try:
+                # Retrieve top candidate pool based on Stage 1 multi-factor scores
+                pool_size = min(len(candidates), max(top_k * 2, 16))
+                top_pool_indices = candidates.sort_values('composite_score', ascending=False).head(pool_size).index
+                pool_df = candidates.loc[top_pool_indices]
+
+                rerank_scores = self.reranker.score_candidates(query, pool_df)
+                if rerank_scores is not None and len(rerank_scores) == len(pool_df):
+                    candidates.loc[top_pool_indices, 'rerank_score'] = rerank_scores.round(3)
+                    # Refine semantic factor: fuse bi-encoder semantic score with cross-encoder relevance
+                    refined_sem = (0.35 * candidates.loc[top_pool_indices, 'semantic_score'].values) + (0.65 * rerank_scores)
+                    candidates.loc[top_pool_indices, 'semantic_score'] = refined_sem.round(3)
+                    
+                    # Recompute composite score with refined semantic factor (avoiding double-counting)
+                    w_sem = w.get('semantic', 0.25)
+                    pool_composite = (
+                        (w_sem * refined_sem) +
+                        (w.get('concern', 0.25) * candidates.loc[top_pool_indices, 'concern_match_score'].values) +
+                        (w.get('skin_evidence', 0.20) * candidates.loc[top_pool_indices, 'skin_evidence_score'].values) +
+                        (w.get('sentiment', 0.15) * candidates.loc[top_pool_indices, 'sentiment_score_calc'].values) +
+                        (w.get('price', 0.05) * candidates.loc[top_pool_indices, 'price_score_calc'].values) +
+                        (w.get('popularity', 0.10) * candidates.loc[top_pool_indices, 'popularity_score_calc'].values)
+                    )
+                    candidates.loc[top_pool_indices, 'composite_score'] = pool_composite.round(3)
+                    candidates.loc[top_pool_indices, 'match_percentage'] = np.clip(
+                        np.nan_to_num(np.round(pool_composite * 100), nan=80.0), 50, 99
+                    ).astype(int)
+            except Exception as e:
+                print(f"⚠️ Reranker failed during inference: {e}. Gracefully falling back to Stage 1 ranking.")
+
+        # Stage 3: Adaptive Feedback Personalization
+        if user_id:
+            try:
+                from src.personalization.preference_manager import AdaptivePersonalizer
+                ap = AdaptivePersonalizer.get_instance()
+                pool_size = min(len(candidates), max(top_k * 10, 100))
+                top_indices = candidates.sort_values('composite_score', ascending=False).head(pool_size).index
+                pool_df = candidates.loc[top_indices]
+                
+                pers_multipliers = [ap.compute_personalization_multiplier(user_id, row) for _, row in pool_df.iterrows()]
+                candidates.loc[top_indices, 'personalization_multiplier'] = np.array(pers_multipliers).round(3)
+                personalized_composite = candidates.loc[top_indices, 'composite_score'].values * np.array(pers_multipliers)
+                candidates.loc[top_indices, 'composite_score'] = personalized_composite.round(3)
+                candidates.loc[top_indices, 'match_percentage'] = np.clip(
+                    np.nan_to_num(np.round(personalized_composite * 100), nan=80.0), 50, 99
+                ).astype(int)
+            except Exception as e:
+                pass
+
         top_candidates = candidates.sort_values('composite_score', ascending=False).head(top_k)
         return top_candidates
 
     def compare_products(self, product_id_a, product_id_b, skin_type=None, concerns=None):
         """
-        Performs in-depth algorithmic side-by-side comparison between two products.
+        Performs in-depth algorithmic side-by-side comparison between two products in INR.
         """
         row_a = self.df[self.df['product_id'] == product_id_a]
         row_b = self.df[self.df['product_id'] == product_id_b]
@@ -249,6 +330,10 @@ class DermaSenseRecommender:
             
         p_a = row_a.iloc[0].to_dict()
         p_b = row_b.iloc[0].to_dict()
+        
+        # Ensure price_inr
+        p_a['price_inr'] = p_a.get('price_inr') or (round(p_a.get('price_usd', 0) * USD_TO_INR_RATE) if p_a.get('price_usd') else None)
+        p_b['price_inr'] = p_b.get('price_inr') or (round(p_b.get('price_usd', 0) * USD_TO_INR_RATE) if p_b.get('price_usd') else None)
         
         # Parse ingredients & benefits
         def _parse(val):
@@ -297,6 +382,16 @@ class DermaSenseRecommender:
             verdict = "Both products are well-matched. Choose based on your preferred brand texture or budget."
             winner_id = "tie"
             
+        # Knowledge Graph Layering Compatibility Check
+        layering_conflicts = []
+        try:
+            from src.knowledge_graph.graph import IngredientKnowledgeGraph
+            kg = IngredientKnowledgeGraph.get_instance()
+            combined_actives = list(actives_a.union(actives_b))
+            layering_conflicts = kg.detect_contraindications(combined_actives)
+        except Exception:
+            layering_conflicts = []
+
         return {
             'product_a': p_a,
             'product_b': p_b,
@@ -310,7 +405,8 @@ class DermaSenseRecommender:
             'reviews_a': int(rev_count_a) if rev_count_a else 0,
             'reviews_b': int(rev_count_b) if rev_count_b else 0,
             'winner_id': winner_id,
-            'verdict': verdict
+            'verdict': verdict,
+            'layering_conflicts': layering_conflicts
         }
 
     def search_catalog_by_name(self, search_term, limit=10):
@@ -325,35 +421,13 @@ class DermaSenseRecommender:
         matches = self.df[mask].head(limit)
         results = []
         for _, r in matches.iterrows():
+            p_inr = r.get('price_inr') or (round(r.get('price_usd', 0) * USD_TO_INR_RATE) if r.get('price_usd') else None)
             results.append({
                 'product_id': r['product_id'],
                 'product_name': r['product_name'],
                 'brand': r['brand'],
                 'category': r['category'],
-                'price_usd': r['price_usd'],
+                'price_inr': p_inr,
                 'rating': r['rating']
             })
         return results
-
-
-if __name__ == "__main__":
-    rec = DermaSenseRecommender()
-    
-    print("\n" + "="*80)
-    print("TESTING 6-FACTOR COMPOSITE RECOMMENDATION")
-    print("="*80)
-    results = rec.recommend(
-        query="lightweight daily sunscreen for sensitive combination skin without white cast",
-        skin_type="combination",
-        target_concerns=["Sun Protection", "Soothing & Anti-Redness"],
-        category="Sunscreen",
-        max_price_usd=40,
-        preset='balanced',
-        top_k=2
-    )
-    
-    for idx, row in results.iterrows():
-        print(f"\nProduct: {row['product_name']} ({row['brand']})")
-        print(f"  Category: {row['category']} | Price: ${row['price_usd']} | Rating: {row['rating']}★")
-        print(f"  Benefits: {row['matched_benefits']}")
-        print(f"  Composite Score: {row['composite_score']} | Semantic: {row['semantic_score']} | Concern: {row['concern_match_score']} | Skin Evidence: {row['skin_evidence_score']} | Sentiment: {row['sentiment_score_calc']}")

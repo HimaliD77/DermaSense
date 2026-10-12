@@ -6,7 +6,11 @@
   <title>DermaSense — Skincare Ingredient Dictionary</title>
   <meta name="description" content="Explore our curated database of 70+ proven active skincare ingredients, biological mechanisms, and therapeutic benefits.">
   <link rel="stylesheet" href="/static/css/style.css">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>🌸</text></svg>">
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/images/dermasense_favicon.png?v=2">
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/images/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="/static/images/favicon-16x16.png?v=2">
+  <link rel="shortcut icon" href="/favicon.ico?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/static/images/apple-touch-icon.png?v=2">
 </head>
 <body>
 
@@ -16,9 +20,12 @@
 
   <div class="container">
     
-    <!-- Header & Branding -->
+    <!-- Header & Branding with Uncluttered Botanical Emblem -->
     <header class="header">
-      <div class="brand-badge">🌿 Chemical Ontology</div>
+      <div class="brand-logo-container">
+        <img src="/static/images/dermasense_emblem.png" alt="DermaSense Botanical Emblem" class="brand-logo-img">
+      </div>
+      <div class="brand-tagline">Personalized • Explainable • Intelligent Skincare</div>
       <h1 class="brand-title">Derma<span>Sense</span></h1>
       <p class="brand-subtitle">
         Understand the science behind your skincare: explore 70+ active compounds categorized by clinical skin benefits.
@@ -109,8 +116,26 @@
         
         const itemsHtml = items.map(item => `
           <div class="ingredient-item">
-            <div class="ingredient-item-name">🔬 ${escapeHtml(item.name)}</div>
-            <div class="ingredient-item-desc">${escapeHtml(item.description)}</div>
+            <div style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 6px;">
+              <div class="ingredient-item-name">🔬 ${escapeHtml(item.name)}</div>
+              ${item.synonyms && item.synonyms.length > 0 ? `
+                <div style="font-size: 0.75rem; color: var(--text-muted);">
+                  Aliases: <span style="color: var(--text-secondary);">${escapeHtml(item.synonyms.slice(0, 3).join(', '))}</span>
+                </div>
+              ` : ''}
+            </div>
+            <div class="ingredient-item-desc" style="margin-top: 4px;">${escapeHtml(item.description)}</div>
+            ${item.citations && item.citations.length > 0 ? `
+              <div style="margin-top: 8px; font-size: 0.78rem; background: rgba(30, 64, 175, 0.05); padding: 6px 10px; border-radius: 6px; border: 1px solid rgba(30, 64, 175, 0.15);">
+                <strong style="color: #1E40AF;">📚 Clinical Study (${escapeHtml(item.citations[0].citation_id)}):</strong>
+                <em>${escapeHtml(item.citations[0].title)}</em> (${escapeHtml(item.citations[0].journal)}, ${item.citations[0].year})
+              </div>
+            ` : ''}
+            ${item.cautions && item.cautions.length > 0 ? `
+              <div style="margin-top: 6px; font-size: 0.76rem; color: #DC2626; background: rgba(239, 68, 68, 0.08); padding: 5px 8px; border-radius: 6px;">
+                ⚠️ <strong>Precaution:</strong> ${escapeHtml(item.cautions[0].recommendation || item.cautions[0].mechanism)}
+              </div>
+            ` : ''}
           </div>
         `).join('');
 

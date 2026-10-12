@@ -1,0 +1,387 @@
+{
+  "summary": {
+    "total_queries_evaluated": 20,
+    "mean_active_ingredient_precision_at_5": 0.93,
+    "mean_active_ingredient_precision_at_10": 0.94,
+    "mean_budget_adherence_rate_percent": 96.5,
+    "mean_unique_brands_per_query": 7.9,
+    "mean_skin_evidence_score": 0.9071,
+    "mean_inference_latency_ms": 91.06,
+    "p95_inference_latency_ms": 135.15
+  },
+  "query_details": [
+    {
+      "id": "Q01",
+      "name": "Dry Skin - Intense Hydration & Barrier Repair",
+      "skin_type": "dry",
+      "concerns": [
+        "Hydration & Barrier"
+      ],
+      "budget_inr": 3500,
+      "latency_ms": 238.27,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.924,
+      "unique_brands_top10": 8,
+      "top_1_product": "Dr. Jart+ - Ceramidin Skin Barrier Moisturizing Mask",
+      "top_1_price_inr": 747,
+      "top_1_match_pct": 85
+    },
+    {
+      "id": "Q02",
+      "name": "Oily Skin - Acne & Blemishes",
+      "skin_type": "oily",
+      "concerns": [
+        "Acne & Blemishes"
+      ],
+      "budget_inr": 2000,
+      "latency_ms": 93.14,
+      "precision_at_5": 0.8,
+      "precision_at_10": 0.8,
+      "budget_adherence_percent": 90.0,
+      "avg_skin_evidence_score": 0.89,
+      "unique_brands_top10": 7,
+      "top_1_product": "Youth To The People - Mini Mandelic Acid + Superfood Unity Exfoliant",
+      "top_1_price_inr": 1328,
+      "top_1_match_pct": 58
+    },
+    {
+      "id": "Q03",
+      "name": "Sensitive Skin - Redness & Rosacea (Fragrance-Free)",
+      "skin_type": "dry",
+      "concerns": [
+        "Soothing & Anti-Redness"
+      ],
+      "budget_inr": 4000,
+      "latency_ms": 129.72,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.924,
+      "unique_brands_top10": 8,
+      "top_1_product": "Dr. Dennis Gross Skincare - Vitamin C Lactic Biocellulose Brightening Treatment Mask",
+      "top_1_price_inr": 996,
+      "top_1_match_pct": 82
+    },
+    {
+      "id": "Q04",
+      "name": "Dull / Pigmented Skin - Brightening & Tone",
+      "skin_type": "combination",
+      "concerns": [
+        "Brightening & Tone"
+      ],
+      "budget_inr": 5000,
+      "latency_ms": 116.09,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.927,
+      "unique_brands_top10": 9,
+      "top_1_product": "SEPHORA COLLECTION - Targeted Dark Spots Serum with Enzymes",
+      "top_1_price_inr": 1660,
+      "top_1_match_pct": 86
+    },
+    {
+      "id": "Q05",
+      "name": "Mature Skin - Anti-Aging & Firming",
+      "skin_type": "dry",
+      "concerns": [
+        "Anti-Aging & Firming"
+      ],
+      "budget_inr": 8000,
+      "latency_ms": 77.58,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.934,
+      "unique_brands_top10": 9,
+      "top_1_product": "LANEIGE - Retinol Firming Cream Treatment with Peptides + Hyaluronic Acid",
+      "top_1_price_inr": 3237,
+      "top_1_match_pct": 84
+    },
+    {
+      "id": "Q06",
+      "name": "Oily / Congested Skin - Pore Minimizing & Texture",
+      "skin_type": "oily",
+      "concerns": [
+        "Pore Refining",
+        "Exfoliation & Texture"
+      ],
+      "budget_inr": 2500,
+      "latency_ms": 75.59,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.894,
+      "unique_brands_top10": 7,
+      "top_1_product": "Farmacy - Mini Deep Sweep 2% BHA Pore Cleaning Toner with Moringa + Papaya",
+      "top_1_price_inr": 1328,
+      "top_1_match_pct": 68
+    },
+    {
+      "id": "Q07",
+      "name": "Combination Skin - Dual Action Hydration & Oil Control",
+      "skin_type": "combination",
+      "concerns": [
+        "Hydration & Barrier",
+        "Pore Refining"
+      ],
+      "budget_inr": 3000,
+      "latency_ms": 74.32,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.927,
+      "unique_brands_top10": 9,
+      "top_1_product": "Summer Fridays - Mini Cloud Dew Oil-Free Gel Cream",
+      "top_1_price_inr": 1411,
+      "top_1_match_pct": 71
+    },
+    {
+      "id": "Q08",
+      "name": "Sun Protection - UV Defense & Anti-Pigmentation",
+      "skin_type": "normal",
+      "concerns": [
+        "Sun Protection",
+        "Brightening & Tone"
+      ],
+      "budget_inr": 2000,
+      "latency_ms": 63.86,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 90.0,
+      "avg_skin_evidence_score": 0.818,
+      "unique_brands_top10": 7,
+      "top_1_product": "N\u00e9cessaire - The Sunscreen - 100% Mineral, Broad Spectrum SPF 30 with 20% Non-Nano Zinc, Hyaluronic Acid and Niacinamide",
+      "top_1_price_inr": 2075,
+      "top_1_match_pct": 78
+    },
+    {
+      "id": "Q09",
+      "name": "Flaky Sensitive Skin - Eczema & Deep Soothing",
+      "skin_type": "dry",
+      "concerns": [
+        "Hydration & Barrier",
+        "Soothing & Anti-Redness"
+      ],
+      "budget_inr": 4500,
+      "latency_ms": 100.22,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.934,
+      "unique_brands_top10": 9,
+      "top_1_product": "Sunday Riley - C.E.O. Afterglow Brightening Vitamin C Moisturizer",
+      "top_1_price_inr": 1826,
+      "top_1_match_pct": 80
+    },
+    {
+      "id": "Q10",
+      "name": "Budget Conscious Acne Treatment (Under INR 1,200)",
+      "skin_type": "oily",
+      "concerns": [
+        "Acne & Blemishes"
+      ],
+      "budget_inr": 1200,
+      "latency_ms": 72.89,
+      "precision_at_5": 0.2,
+      "precision_at_10": 0.3,
+      "budget_adherence_percent": 80.0,
+      "avg_skin_evidence_score": 0.85,
+      "unique_brands_top10": 6,
+      "top_1_product": "SEPHORA COLLECTION - Clean Skin Gel Cleanser with Prebiotics",
+      "top_1_price_inr": 996,
+      "top_1_match_pct": 55
+    },
+    {
+      "id": "Q11",
+      "name": "Anti-Aging Eye Care - Wrinkles & Dark Circles",
+      "skin_type": "normal",
+      "concerns": [
+        "Anti-Aging & Firming",
+        "Brightening & Tone"
+      ],
+      "budget_inr": 6000,
+      "latency_ms": 87.36,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.919,
+      "unique_brands_top10": 9,
+      "top_1_product": "Summer Fridays - Light Aura Vitamin C + Peptide Eye Cream",
+      "top_1_price_inr": 3486,
+      "top_1_match_pct": 81
+    },
+    {
+      "id": "Q12",
+      "name": "Post-Acne Scarring & Hyperpigmentation",
+      "skin_type": "combination",
+      "concerns": [
+        "Brightening & Tone",
+        "Exfoliation & Texture"
+      ],
+      "budget_inr": 3500,
+      "latency_ms": 85.9,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.936,
+      "unique_brands_top10": 8,
+      "top_1_product": "ROSE INC - Mini Skin Resolution Clarifying Acid Toner",
+      "top_1_price_inr": 1245,
+      "top_1_match_pct": 81
+    },
+    {
+      "id": "Q13",
+      "name": "Severe Dehydration - Water Infusion",
+      "skin_type": "dry",
+      "concerns": [
+        "Hydration & Barrier"
+      ],
+      "budget_inr": 2500,
+      "latency_ms": 77.41,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.926,
+      "unique_brands_top10": 8,
+      "top_1_product": "Paula's Choice - RESIST Advanced Replenishing Toner with Hyaluronic Acid",
+      "top_1_price_inr": 2158,
+      "top_1_match_pct": 81
+    },
+    {
+      "id": "Q14",
+      "name": "Gentle Clarifying Cleanser for Combination Skin",
+      "skin_type": "combination",
+      "concerns": [
+        "Acne & Blemishes",
+        "Hydration & Barrier"
+      ],
+      "budget_inr": 2000,
+      "latency_ms": 61.47,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.925,
+      "unique_brands_top10": 7,
+      "top_1_product": "Paula's Choice - RESIST Perfectly Balanced Foaming Cleanser",
+      "top_1_price_inr": 1826,
+      "top_1_match_pct": 71
+    },
+    {
+      "id": "Q15",
+      "name": "Antioxidant Environmental Shield",
+      "skin_type": "normal",
+      "concerns": [
+        "Brightening & Tone",
+        "Anti-Aging & Firming"
+      ],
+      "budget_inr": 4500,
+      "latency_ms": 68.5,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.922,
+      "unique_brands_top10": 9,
+      "top_1_product": "Youth To The People - Mini Mandelic Acid + Superfood Unity Exfoliant",
+      "top_1_price_inr": 1328,
+      "top_1_match_pct": 81
+    },
+    {
+      "id": "Q16",
+      "name": "Over-Exfoliated Barrier SOS Recovery",
+      "skin_type": "dry",
+      "concerns": [
+        "Hydration & Barrier",
+        "Soothing & Anti-Redness"
+      ],
+      "budget_inr": 3800,
+      "latency_ms": 91.54,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.928,
+      "unique_brands_top10": 8,
+      "top_1_product": "Dr. Jart+ - Ceramidin Skin Barrier Moisturizing Mask",
+      "top_1_price_inr": 747,
+      "top_1_match_pct": 84
+    },
+    {
+      "id": "Q17",
+      "name": "Body Keratosis Pilaris & Rough Bumpy Texture",
+      "skin_type": "dry",
+      "concerns": [
+        "Exfoliation & Texture",
+        "Hydration & Barrier"
+      ],
+      "budget_inr": 3000,
+      "latency_ms": 79.63,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.927,
+      "unique_brands_top10": 6,
+      "top_1_product": "The Ordinary - Lactic Acid 10% + HA 2% Exfoliating Serum",
+      "top_1_price_inr": 739,
+      "top_1_match_pct": 82
+    },
+    {
+      "id": "Q18",
+      "name": "Teenage Hormonal Breakout Control",
+      "skin_type": "oily",
+      "concerns": [
+        "Acne & Blemishes",
+        "Pore Refining"
+      ],
+      "budget_inr": 1800,
+      "latency_ms": 75.41,
+      "precision_at_5": 0.6,
+      "precision_at_10": 0.7,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.909,
+      "unique_brands_top10": 5,
+      "top_1_product": "The Ordinary - AHA 30% + BHA 2% Exfoliating Peeling Solution",
+      "top_1_price_inr": 788,
+      "top_1_match_pct": 53
+    },
+    {
+      "id": "Q19",
+      "name": "Non-Greasy Matte Sunscreen for Oily Skin",
+      "skin_type": "oily",
+      "concerns": [
+        "Sun Protection",
+        "Pore Refining"
+      ],
+      "budget_inr": 2200,
+      "latency_ms": 83.77,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 70.0,
+      "avg_skin_evidence_score": 0.805,
+      "unique_brands_top10": 9,
+      "top_1_product": "The INKEY List - Polyglutamic Acid Dewy Sunscreen SPF 30",
+      "top_1_price_inr": 1244,
+      "top_1_match_pct": 67
+    },
+    {
+      "id": "Q20",
+      "name": "Radiance & Glow Renewal Overnight Mask",
+      "skin_type": "normal",
+      "concerns": [
+        "Brightening & Tone",
+        "Hydration & Barrier"
+      ],
+      "budget_inr": 5500,
+      "latency_ms": 68.55,
+      "precision_at_5": 1.0,
+      "precision_at_10": 1.0,
+      "budget_adherence_percent": 100.0,
+      "avg_skin_evidence_score": 0.922,
+      "unique_brands_top10": 10,
+      "top_1_product": "Farmacy - 10% Niacinamide Night Mask",
+      "top_1_price_inr": 3652,
+      "top_1_match_pct": 82
+    }
+  ]
+}

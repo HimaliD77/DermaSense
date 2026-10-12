@@ -1,0 +1,770 @@
+{
+  "persona_01": {
+    "user_id": "persona_01",
+    "created_at": 1791784022.2643974,
+    "updated_at": 1791784025.4324596,
+    "skin_type": "oily",
+    "concerns": [
+      "Acne & Blemish Control",
+      "Oil & Pore Control"
+    ],
+    "ingredient_affinities": {
+      "salicylic acid": -0.5,
+      "niacinamide": 0.15,
+      "zinc pca": 0.1
+    },
+    "disliked_ingredients": [
+      "salicylic acid"
+    ],
+    "liked_ingredients": [
+      "niacinamide",
+      "zinc pca"
+    ],
+    "preferred_brands": {
+      "The Ordinary": 2
+    },
+    "disliked_brands": [],
+    "interaction_count": 3,
+    "feedback_history": [
+      {
+        "timestamp": 1791784023.31875,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "salicylic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784025.4318988,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "The Ordinary",
+        "actives": [
+          "niacinamide"
+        ]
+      },
+      {
+        "timestamp": 1791784025.432469,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "The Ordinary",
+        "actives": [
+          "zinc pca"
+        ]
+      }
+    ]
+  },
+  "persona_02": {
+    "user_id": "persona_02",
+    "created_at": 1791784027.5660932,
+    "updated_at": 1791784030.3686118,
+    "skin_type": "dry",
+    "concerns": [
+      "Anti-Aging & Firming",
+      "Hydration & Barrier"
+    ],
+    "ingredient_affinities": {
+      "retinol": -0.5,
+      "bakuchiol": 0.15,
+      "peptides": 0.1,
+      "ceramide": 0.25
+    },
+    "disliked_ingredients": [
+      "retinol"
+    ],
+    "liked_ingredients": [
+      "bakuchiol",
+      "ceramide",
+      "peptides"
+    ],
+    "preferred_brands": {
+      "Paula's Choice": 3
+    },
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784027.8968487,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "retinol"
+        ]
+      },
+      {
+        "timestamp": 1791784030.3635328,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "Paula's Choice",
+        "actives": [
+          "bakuchiol"
+        ]
+      },
+      {
+        "timestamp": 1791784030.3680909,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "Paula's Choice",
+        "actives": [
+          "peptides"
+        ]
+      },
+      {
+        "timestamp": 1791784030.3686204,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": "Paula's Choice",
+        "actives": [
+          "ceramide"
+        ]
+      }
+    ]
+  },
+  "persona_03": {
+    "user_id": "persona_03",
+    "created_at": 1791784032.763271,
+    "updated_at": 1791784034.9327786,
+    "skin_type": "dry",
+    "concerns": [
+      "Hydration & Barrier",
+      "Soothing & Anti-Redness"
+    ],
+    "ingredient_affinities": {
+      "glycolic acid": -0.5,
+      "centella asiatica": 0.15,
+      "panthenol": 0.1,
+      "ceramide": 0.25
+    },
+    "disliked_ingredients": [
+      "glycolic acid"
+    ],
+    "liked_ingredients": [
+      "centella asiatica",
+      "ceramide",
+      "panthenol"
+    ],
+    "preferred_brands": {},
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784033.0808196,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "glycolic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784034.931389,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": null,
+        "actives": [
+          "centella asiatica"
+        ]
+      },
+      {
+        "timestamp": 1791784034.9321613,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": null,
+        "actives": [
+          "panthenol"
+        ]
+      },
+      {
+        "timestamp": 1791784034.932786,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": null,
+        "actives": [
+          "ceramide"
+        ]
+      }
+    ]
+  },
+  "persona_04": {
+    "user_id": "persona_04",
+    "created_at": 1791784036.7441587,
+    "updated_at": 1791784039.4002898,
+    "skin_type": "combination",
+    "concerns": [
+      "Brightening & Tone",
+      "Exfoliation & Texture"
+    ],
+    "ingredient_affinities": {
+      "hydroquinone": -0.5,
+      "vitamin c": 0.15,
+      "alpha-arbutin": 0.1,
+      "tranexamic acid": 0.25
+    },
+    "disliked_ingredients": [
+      "hydroquinone"
+    ],
+    "liked_ingredients": [
+      "alpha-arbutin",
+      "tranexamic acid",
+      "vitamin c"
+    ],
+    "preferred_brands": {
+      "Sunday Riley": 3
+    },
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784037.086808,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "hydroquinone"
+        ]
+      },
+      {
+        "timestamp": 1791784039.3988466,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "Sunday Riley",
+        "actives": [
+          "vitamin c"
+        ]
+      },
+      {
+        "timestamp": 1791784039.3996744,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "Sunday Riley",
+        "actives": [
+          "alpha-arbutin"
+        ]
+      },
+      {
+        "timestamp": 1791784039.4002979,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": "Sunday Riley",
+        "actives": [
+          "tranexamic acid"
+        ]
+      }
+    ]
+  },
+  "persona_05": {
+    "user_id": "persona_05",
+    "created_at": 1791784041.691584,
+    "updated_at": 1791784044.306769,
+    "skin_type": "dry",
+    "concerns": [
+      "Hydration & Barrier",
+      "Soothing & Anti-Redness"
+    ],
+    "ingredient_affinities": {
+      "benzoyl peroxide": -0.5,
+      "fragrance": -0.5,
+      "colloidal oatmeal": 0.15,
+      "ceramide": 0.1,
+      "allantoin": 0.25
+    },
+    "disliked_ingredients": [
+      "benzoyl peroxide",
+      "fragrance"
+    ],
+    "liked_ingredients": [
+      "allantoin",
+      "ceramide",
+      "colloidal oatmeal"
+    ],
+    "preferred_brands": {
+      "First Aid Beauty": 3
+    },
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784041.9282165,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "benzoyl peroxide",
+          "fragrance"
+        ]
+      },
+      {
+        "timestamp": 1791784044.304722,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "First Aid Beauty",
+        "actives": [
+          "colloidal oatmeal"
+        ]
+      },
+      {
+        "timestamp": 1791784044.3056219,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "First Aid Beauty",
+        "actives": [
+          "ceramide"
+        ]
+      },
+      {
+        "timestamp": 1791784044.3067772,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": "First Aid Beauty",
+        "actives": [
+          "allantoin"
+        ]
+      }
+    ]
+  },
+  "persona_06": {
+    "user_id": "persona_06",
+    "created_at": 1791784046.690815,
+    "updated_at": 1791784049.1307218,
+    "skin_type": "oily",
+    "concerns": [
+      "Oil & Pore Control"
+    ],
+    "ingredient_affinities": {
+      "squalane": -0.5,
+      "shea butter": -0.5,
+      "green tea": 0.15,
+      "zinc pca": 0.1,
+      "hyaluronic acid": 0.25
+    },
+    "disliked_ingredients": [
+      "shea butter",
+      "squalane"
+    ],
+    "liked_ingredients": [
+      "green tea",
+      "hyaluronic acid",
+      "zinc pca"
+    ],
+    "preferred_brands": {},
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784047.0022316,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "squalane",
+          "shea butter"
+        ]
+      },
+      {
+        "timestamp": 1791784049.128994,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": null,
+        "actives": [
+          "green tea"
+        ]
+      },
+      {
+        "timestamp": 1791784049.1299725,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": null,
+        "actives": [
+          "zinc pca"
+        ]
+      },
+      {
+        "timestamp": 1791784049.1307292,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": null,
+        "actives": [
+          "hyaluronic acid"
+        ]
+      }
+    ]
+  },
+  "persona_07": {
+    "user_id": "persona_07",
+    "created_at": 1791784051.2594206,
+    "updated_at": 1791784054.1825967,
+    "skin_type": "dry",
+    "concerns": [
+      "Anti-Aging & Firming"
+    ],
+    "ingredient_affinities": {
+      "alcohol denat": -0.5,
+      "peptides": 0.15,
+      "resveratrol": 0.1,
+      "squalane": 0.25
+    },
+    "disliked_ingredients": [
+      "alcohol denat"
+    ],
+    "liked_ingredients": [
+      "peptides",
+      "resveratrol",
+      "squalane"
+    ],
+    "preferred_brands": {
+      "Drunk Elephant": 3
+    },
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784051.5757294,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "alcohol denat"
+        ]
+      },
+      {
+        "timestamp": 1791784054.179428,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "Drunk Elephant",
+        "actives": [
+          "peptides"
+        ]
+      },
+      {
+        "timestamp": 1791784054.181408,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "Drunk Elephant",
+        "actives": [
+          "resveratrol"
+        ]
+      },
+      {
+        "timestamp": 1791784054.1826062,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": "Drunk Elephant",
+        "actives": [
+          "squalane"
+        ]
+      }
+    ]
+  },
+  "persona_08": {
+    "user_id": "persona_08",
+    "created_at": 1791784056.7458994,
+    "updated_at": 1791784059.2507813,
+    "skin_type": "combination",
+    "concerns": [
+      "Exfoliation & Texture"
+    ],
+    "ingredient_affinities": {
+      "glycolic acid": -0.5,
+      "lactic acid": 0.15,
+      "gluconolactone": 0.1,
+      "mandelic acid": 0.25
+    },
+    "disliked_ingredients": [
+      "glycolic acid"
+    ],
+    "liked_ingredients": [
+      "gluconolactone",
+      "lactic acid",
+      "mandelic acid"
+    ],
+    "preferred_brands": {},
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784057.0581162,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "glycolic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784059.2483587,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": null,
+        "actives": [
+          "lactic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784059.2498262,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": null,
+        "actives": [
+          "gluconolactone"
+        ]
+      },
+      {
+        "timestamp": 1791784059.2507885,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": null,
+        "actives": [
+          "mandelic acid"
+        ]
+      }
+    ]
+  },
+  "persona_09": {
+    "user_id": "persona_09",
+    "created_at": 1791784061.5169559,
+    "updated_at": 1791784064.145342,
+    "skin_type": "sensitive",
+    "concerns": [
+      "Soothing & Anti-Redness"
+    ],
+    "ingredient_affinities": {
+      "menthol": -0.5,
+      "essential oils": -0.5,
+      "azelaic acid": 0.15,
+      "centella asiatica": 0.1,
+      "allantoin": 0.25
+    },
+    "disliked_ingredients": [
+      "essential oils",
+      "menthol"
+    ],
+    "liked_ingredients": [
+      "allantoin",
+      "azelaic acid",
+      "centella asiatica"
+    ],
+    "preferred_brands": {
+      "Paula's Choice": 3
+    },
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784061.8283515,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "menthol",
+          "essential oils"
+        ]
+      },
+      {
+        "timestamp": 1791784064.1430604,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "Paula's Choice",
+        "actives": [
+          "azelaic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784064.1443276,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "Paula's Choice",
+        "actives": [
+          "centella asiatica"
+        ]
+      },
+      {
+        "timestamp": 1791784064.145349,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": "Paula's Choice",
+        "actives": [
+          "allantoin"
+        ]
+      }
+    ]
+  },
+  "persona_10": {
+    "user_id": "persona_10",
+    "created_at": 1791784066.4582756,
+    "updated_at": 1791784069.1748202,
+    "skin_type": "combination",
+    "concerns": [
+      "Hydration & Barrier"
+    ],
+    "ingredient_affinities": {
+      "clay": -0.5,
+      "charcoal": -0.5,
+      "hyaluronic acid": 0.15,
+      "polyglutamic acid": 0.1,
+      "glycerin": 0.25
+    },
+    "disliked_ingredients": [
+      "charcoal",
+      "clay"
+    ],
+    "liked_ingredients": [
+      "glycerin",
+      "hyaluronic acid",
+      "polyglutamic acid"
+    ],
+    "preferred_brands": {
+      "The Ordinary": 3
+    },
+    "disliked_brands": [],
+    "interaction_count": 4,
+    "feedback_history": [
+      {
+        "timestamp": 1791784066.747524,
+        "product_id": "sim_bad_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "GenericBrand",
+        "actives": [
+          "clay",
+          "charcoal"
+        ]
+      },
+      {
+        "timestamp": 1791784069.1723266,
+        "product_id": "sim_good_1",
+        "feedback_type": "like",
+        "rating": 5.0,
+        "reason": "loved texture",
+        "brand": "The Ordinary",
+        "actives": [
+          "hyaluronic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784069.173707,
+        "product_id": "sim_routine_1",
+        "feedback_type": "routine_pm",
+        "rating": null,
+        "reason": null,
+        "brand": "The Ordinary",
+        "actives": [
+          "polyglutamic acid"
+        ]
+      },
+      {
+        "timestamp": 1791784069.1748273,
+        "product_id": "sim_good_2",
+        "feedback_type": "tried_loved",
+        "rating": null,
+        "reason": null,
+        "brand": "The Ordinary",
+        "actives": [
+          "glycerin"
+        ]
+      }
+    ]
+  },
+  "live_test_user": {
+    "user_id": "live_test_user",
+    "created_at": 1791784204.2982385,
+    "updated_at": 1791784204.299668,
+    "skin_type": null,
+    "concerns": [],
+    "ingredient_affinities": {
+      "salicylic acid": -0.5
+    },
+    "disliked_ingredients": [
+      "salicylic acid"
+    ],
+    "liked_ingredients": [],
+    "preferred_brands": {},
+    "disliked_brands": [],
+    "interaction_count": 1,
+    "feedback_history": [
+      {
+        "timestamp": 1791784204.299681,
+        "product_id": "prod_demo_1",
+        "feedback_type": "dislike",
+        "rating": null,
+        "reason": "caused breakouts",
+        "brand": "BadBrand",
+        "actives": [
+          "salicylic acid"
+        ]
+      }
+    ]
+  }
+}

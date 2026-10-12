@@ -54,14 +54,31 @@ DermaSense/
 ```bash
 pip install -r requirements.txt
 ```
-*(Or install core dependencies: `pandas`, `numpy`, `scikit-learn`, `sentence-transformers`, `faiss-cpu`, `nltk`)*
 
-### 2. Run Recommender Evaluation
+### 2. Launch the Web Application (Interactive UI)
 ```bash
-python src/models/recommender.py
+python app/app.py
 ```
+Open your browser at **`http://127.0.0.1:5000`** to access:
+- **🌸 Skin Profile Consultation:** Questionnaire with skin type, concern tags, and INR (₹) budget slider.
+- **✨ Recommendations:** AI-ranked products with match score %, clickable ingredient chemistry modals, and interactive AM/PM routine drawer.
+- **⚖️ Compare:** Side-by-side product formulation and review comparison.
+- **🌿 Ingredient Dictionary:** Searchable database of 70+ proven skincare actives.
 
-### 3. Run Explainability Demo
-```bash
-python src/explainability/explainer.py
-```
+---
+
+## 🧪 CLI Testing & Evaluation
+
+- **Test Recommender Engine:**
+  ```bash
+  python src/models/recommender.py
+  ```
+- **Test Explainability Generator:**
+  ```bash
+  python src/explainability/explainer.py
+  ```
+- **Launch Jupyter Notebook for EDA:**
+  ```bash
+  jupyter notebook notebooks/01_exploratory_data_analysis.ipynb
+  ```
+

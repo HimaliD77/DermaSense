@@ -1,0 +1,426 @@
+{
+  "summary": {
+    "entity_resolution": {
+      "test_cases_count": 40,
+      "baseline_accuracy_percent": 27.5,
+      "graph_accuracy_percent": 100.0,
+      "relative_gain_percent": 263.6
+    },
+    "evidence_traceability": {
+      "total_recommendations_evaluated": 100,
+      "baseline_citation_rate_percent": 0.0,
+      "graph_citation_rate_percent": 96.0,
+      "total_pmids_linked": 213,
+      "mean_traversal_latency_ms": 0.22
+    },
+    "formulation_safety": {
+      "test_routines_count": 15,
+      "baseline_conflict_detection_percent": 0.0,
+      "graph_conflict_accuracy_percent": 100.0
+    }
+  },
+  "resolution_breakdown": [
+    {
+      "alias": "Vitamin B3",
+      "expected_canonical": "niacinamide",
+      "baseline_recognized": false,
+      "graph_resolved": "niacinamide",
+      "graph_success": true
+    },
+    {
+      "alias": "Nicotinamide",
+      "expected_canonical": "niacinamide",
+      "baseline_recognized": false,
+      "graph_resolved": "niacinamide",
+      "graph_success": true
+    },
+    {
+      "alias": "Pyridine-3-carboxamide",
+      "expected_canonical": "niacinamide",
+      "baseline_recognized": false,
+      "graph_resolved": "niacinamide",
+      "graph_success": true
+    },
+    {
+      "alias": "L-Ascorbic Acid",
+      "expected_canonical": "vitamin c",
+      "baseline_recognized": false,
+      "graph_resolved": "vitamin c",
+      "graph_success": true
+    },
+    {
+      "alias": "Ascorbic Acid",
+      "expected_canonical": "vitamin c",
+      "baseline_recognized": true,
+      "graph_resolved": "vitamin c",
+      "graph_success": true
+    },
+    {
+      "alias": "Magnesium Ascorbyl Phosphate",
+      "expected_canonical": "vitamin c",
+      "baseline_recognized": true,
+      "graph_resolved": "vitamin c",
+      "graph_success": true
+    },
+    {
+      "alias": "Ascorbyl Glucoside",
+      "expected_canonical": "vitamin c",
+      "baseline_recognized": true,
+      "graph_resolved": "vitamin c",
+      "graph_success": true
+    },
+    {
+      "alias": "Tetrahexyldecyl Ascorbate",
+      "expected_canonical": "vitamin c",
+      "baseline_recognized": true,
+      "graph_resolved": "vitamin c",
+      "graph_success": true
+    },
+    {
+      "alias": "BHA",
+      "expected_canonical": "salicylic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "salicylic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Beta Hydroxy Acid",
+      "expected_canonical": "salicylic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "salicylic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "2-Hydroxybenzoic Acid",
+      "expected_canonical": "salicylic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "salicylic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "AHA",
+      "expected_canonical": "glycolic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "glycolic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Alpha Hydroxy Acid",
+      "expected_canonical": "glycolic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "glycolic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Hydroxyacetic Acid",
+      "expected_canonical": "glycolic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "glycolic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Cica",
+      "expected_canonical": "centella asiatica",
+      "baseline_recognized": false,
+      "graph_resolved": "centella asiatica",
+      "graph_success": true
+    },
+    {
+      "alias": "Gotu Kola",
+      "expected_canonical": "centella asiatica",
+      "baseline_recognized": false,
+      "graph_resolved": "centella asiatica",
+      "graph_success": true
+    },
+    {
+      "alias": "Tiger Grass",
+      "expected_canonical": "centella asiatica",
+      "baseline_recognized": false,
+      "graph_resolved": "centella asiatica",
+      "graph_success": true
+    },
+    {
+      "alias": "Madecassoside",
+      "expected_canonical": "centella asiatica",
+      "baseline_recognized": true,
+      "graph_resolved": "centella asiatica",
+      "graph_success": true
+    },
+    {
+      "alias": "Asiaticoside",
+      "expected_canonical": "centella asiatica",
+      "baseline_recognized": true,
+      "graph_resolved": "centella asiatica",
+      "graph_success": true
+    },
+    {
+      "alias": "Sodium Hyaluronate",
+      "expected_canonical": "hyaluronic acid",
+      "baseline_recognized": true,
+      "graph_resolved": "hyaluronic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "HA",
+      "expected_canonical": "hyaluronic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "hyaluronic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Hyaluronan",
+      "expected_canonical": "hyaluronic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "hyaluronic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Potassium Hyaluronate",
+      "expected_canonical": "hyaluronic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "hyaluronic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Pro-Vitamin B5",
+      "expected_canonical": "panthenol",
+      "baseline_recognized": false,
+      "graph_resolved": "panthenol",
+      "graph_success": true
+    },
+    {
+      "alias": "D-Panthenol",
+      "expected_canonical": "panthenol",
+      "baseline_recognized": false,
+      "graph_resolved": "panthenol",
+      "graph_success": true
+    },
+    {
+      "alias": "Dexpanthenol",
+      "expected_canonical": "panthenol",
+      "baseline_recognized": false,
+      "graph_resolved": "panthenol",
+      "graph_success": true
+    },
+    {
+      "alias": "Ceramide NP",
+      "expected_canonical": "ceramide",
+      "baseline_recognized": true,
+      "graph_resolved": "ceramide",
+      "graph_success": true
+    },
+    {
+      "alias": "Ceramide AP",
+      "expected_canonical": "ceramide",
+      "baseline_recognized": true,
+      "graph_resolved": "ceramide",
+      "graph_success": true
+    },
+    {
+      "alias": "Ceramide EOP",
+      "expected_canonical": "ceramide",
+      "baseline_recognized": true,
+      "graph_resolved": "ceramide",
+      "graph_success": true
+    },
+    {
+      "alias": "Sphingolipids",
+      "expected_canonical": "ceramide",
+      "baseline_recognized": false,
+      "graph_resolved": "ceramide",
+      "graph_success": true
+    },
+    {
+      "alias": "Vitamin A",
+      "expected_canonical": "retinol",
+      "baseline_recognized": false,
+      "graph_resolved": "retinol",
+      "graph_success": true
+    },
+    {
+      "alias": "Retinyl Palmitate",
+      "expected_canonical": "retinol",
+      "baseline_recognized": false,
+      "graph_resolved": "retinol",
+      "graph_success": true
+    },
+    {
+      "alias": "Retinaldehyde",
+      "expected_canonical": "retinol",
+      "baseline_recognized": false,
+      "graph_resolved": "retinol",
+      "graph_success": true
+    },
+    {
+      "alias": "Retinal",
+      "expected_canonical": "retinol",
+      "baseline_recognized": true,
+      "graph_resolved": "retinol",
+      "graph_success": true
+    },
+    {
+      "alias": "Nonanedioic Acid",
+      "expected_canonical": "azelaic acid",
+      "baseline_recognized": false,
+      "graph_resolved": "azelaic acid",
+      "graph_success": true
+    },
+    {
+      "alias": "Zinc Salt",
+      "expected_canonical": "zinc pca",
+      "baseline_recognized": false,
+      "graph_resolved": "zinc pca",
+      "graph_success": true
+    },
+    {
+      "alias": "Zinc Pidolate",
+      "expected_canonical": "zinc pca",
+      "baseline_recognized": false,
+      "graph_resolved": "zinc pca",
+      "graph_success": true
+    },
+    {
+      "alias": "Avena Sativa Kernel Flour",
+      "expected_canonical": "colloidal oatmeal",
+      "baseline_recognized": false,
+      "graph_resolved": "colloidal oatmeal",
+      "graph_success": true
+    },
+    {
+      "alias": "Plant Squalane",
+      "expected_canonical": "squalane",
+      "baseline_recognized": false,
+      "graph_resolved": "squalane",
+      "graph_success": true
+    },
+    {
+      "alias": "Polyhydroxy Acid",
+      "expected_canonical": "gluconolactone",
+      "baseline_recognized": false,
+      "graph_resolved": "gluconolactone",
+      "graph_success": true
+    }
+  ],
+  "query_traceability": [
+    {
+      "query_id": "Q01",
+      "query_name": "Dry Skin - Intense Hydration & Barrier Repair",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 15
+    },
+    {
+      "query_id": "Q02",
+      "query_name": "Oily Skin - Acne & Blemishes",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 11
+    },
+    {
+      "query_id": "Q03",
+      "query_name": "Sensitive Skin - Redness & Rosacea (Fragrance-Free)",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 15
+    },
+    {
+      "query_id": "Q04",
+      "query_name": "Dull / Pigmented Skin - Brightening & Tone",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 13
+    },
+    {
+      "query_id": "Q05",
+      "query_name": "Mature Skin - Anti-Aging & Firming",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 19
+    },
+    {
+      "query_id": "Q06",
+      "query_name": "Oily / Congested Skin - Pore Minimizing & Texture",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 9
+    },
+    {
+      "query_id": "Q07",
+      "query_name": "Combination Skin - Dual Action Hydration & Oil Control",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 9
+    },
+    {
+      "query_id": "Q08",
+      "query_name": "Sun Protection - UV Defense & Anti-Pigmentation",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 10
+    },
+    {
+      "query_id": "Q09",
+      "query_name": "Flaky Sensitive Skin - Eczema & Deep Soothing",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 13
+    },
+    {
+      "query_id": "Q10",
+      "query_name": "Budget Conscious Acne Treatment (Under INR 1,200)",
+      "top5_grounded_fraction": 0.2,
+      "citations_count": 1
+    },
+    {
+      "query_id": "Q11",
+      "query_name": "Anti-Aging Eye Care - Wrinkles & Dark Circles",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 16
+    },
+    {
+      "query_id": "Q12",
+      "query_name": "Post-Acne Scarring & Hyperpigmentation",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 12
+    },
+    {
+      "query_id": "Q13",
+      "query_name": "Severe Dehydration - Water Infusion",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 6
+    },
+    {
+      "query_id": "Q14",
+      "query_name": "Gentle Clarifying Cleanser for Combination Skin",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 6
+    },
+    {
+      "query_id": "Q15",
+      "query_name": "Antioxidant Environmental Shield",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 21
+    },
+    {
+      "query_id": "Q16",
+      "query_name": "Over-Exfoliated Barrier SOS Recovery",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 10
+    },
+    {
+      "query_id": "Q17",
+      "query_name": "Body Keratosis Pilaris & Rough Bumpy Texture",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 4
+    },
+    {
+      "query_id": "Q18",
+      "query_name": "Teenage Hormonal Breakout Control",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 6
+    },
+    {
+      "query_id": "Q19",
+      "query_name": "Non-Greasy Matte Sunscreen for Oily Skin",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 4
+    },
+    {
+      "query_id": "Q20",
+      "query_name": "Radiance & Glow Renewal Overnight Mask",
+      "top5_grounded_fraction": 1.0,
+      "citations_count": 13
+    }
+  ]
+}

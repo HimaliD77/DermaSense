@@ -1,0 +1,383 @@
+{
+  "summary": {
+    "benchmark_queries_count": 20,
+    "ungrounded": {
+      "mean_groundedness_percent": 46.5,
+      "citation_hallucinations_count": 0,
+      "safety_compliance_percent": 95.0,
+      "mean_latency_ms": 13069.8
+    },
+    "grounded_rag": {
+      "mean_groundedness_percent": 97.1,
+      "verified_citations_count": 17,
+      "citation_hallucinations_count": 0,
+      "safety_compliance_percent": 100.0,
+      "mean_latency_ms": 14833.7,
+      "relative_faithfulness_gain_percent": 108.8
+    }
+  },
+  "ungrounded_results": [
+    {
+      "query_id": "RAG_Q01",
+      "latency_ms": 17311.77,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q02",
+      "latency_ms": 8553.45,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q03",
+      "latency_ms": 18538.39,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q04",
+      "latency_ms": 18592.02,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q05",
+      "latency_ms": 11377.17,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q06",
+      "latency_ms": 15734.22,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q07",
+      "latency_ms": 17821.99,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q08",
+      "latency_ms": 8986.53,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q09",
+      "latency_ms": 8692.19,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q10",
+      "latency_ms": 7746.89,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q11",
+      "latency_ms": 11623.88,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q12",
+      "latency_ms": 15086.6,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q13",
+      "latency_ms": 12494.56,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q14",
+      "latency_ms": 7328.24,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q15",
+      "latency_ms": 12440.59,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q16",
+      "latency_ms": 16257.47,
+      "groundedness_score": 0.5,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q17",
+      "latency_ms": 20035.17,
+      "groundedness_score": 0.1,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": false
+    },
+    {
+      "query_id": "RAG_Q18",
+      "latency_ms": 6696.43,
+      "groundedness_score": 0.4,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q19",
+      "latency_ms": 15765.41,
+      "groundedness_score": 0.4,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    },
+    {
+      "query_id": "RAG_Q20",
+      "latency_ms": 10312.86,
+      "groundedness_score": 0.4,
+      "pmids_cited_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true
+    }
+  ],
+  "grounded_results": [
+    {
+      "query_id": "RAG_Q01",
+      "latency_ms": 20129.91,
+      "groundedness_score": 0.67,
+      "pmids_cited_count": 2,
+      "pmids_verified_count": 2,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q02",
+      "latency_ms": 10234.46,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q03",
+      "latency_ms": 20141.46,
+      "groundedness_score": 0.92,
+      "pmids_cited_count": 2,
+      "pmids_verified_count": 2,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "deterministic-evidence-synthesizer"
+    },
+    {
+      "query_id": "RAG_Q04",
+      "latency_ms": 13677.62,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q05",
+      "latency_ms": 15782.3,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 2,
+      "pmids_verified_count": 2,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q06",
+      "latency_ms": 10531.67,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q07",
+      "latency_ms": 9799.12,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q08",
+      "latency_ms": 20149.72,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 2,
+      "pmids_verified_count": 2,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "deterministic-evidence-synthesizer"
+    },
+    {
+      "query_id": "RAG_Q09",
+      "latency_ms": 14294.96,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q10",
+      "latency_ms": 12416.07,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q11",
+      "latency_ms": 12964.41,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q12",
+      "latency_ms": 10090.58,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q13",
+      "latency_ms": 18174.91,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q14",
+      "latency_ms": 19074.79,
+      "groundedness_score": 0.83,
+      "pmids_cited_count": 1,
+      "pmids_verified_count": 1,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q15",
+      "latency_ms": 20184.14,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 2,
+      "pmids_verified_count": 2,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "deterministic-evidence-synthesizer"
+    },
+    {
+      "query_id": "RAG_Q16",
+      "latency_ms": 20165.52,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "deterministic-evidence-synthesizer"
+    },
+    {
+      "query_id": "RAG_Q17",
+      "latency_ms": 11508.82,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q18",
+      "latency_ms": 13887.5,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q19",
+      "latency_ms": 9188.1,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    },
+    {
+      "query_id": "RAG_Q20",
+      "latency_ms": 14278.15,
+      "groundedness_score": 1.0,
+      "pmids_cited_count": 0,
+      "pmids_verified_count": 0,
+      "pmids_hallucinated_count": 0,
+      "safety_compliant": true,
+      "model_used": "qwen2.5:7b-instruct"
+    }
+  ]
+}
