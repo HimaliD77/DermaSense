@@ -80,6 +80,22 @@ class TestEvidenceGroundedQAEngine(unittest.TestCase):
         self.assertIn('PMID:99999999', v2['hallucinated_citations'])
         self.assertLess(v2['groundedness_score'], 0.8)
 
+    def test_routine_advice_intent_and_synthesis(self):
+        """Tests that asking for advice triggers ROUTINE_ADVICE intent and generates AM/PM regimen guidance."""
+        from src.rag.qa_engine import classify_user_intent
+        intent = classify_user_intent("What advice do you have for oily skin and acne?")
+        self.assertEqual(intent, "ROUTINE_ADVICE")
+
+        res = self.engine.answer_question(
+            question="What advice do you have for my skincare routine?",
+            skin_type="oily",
+            concerns=["Acne & Blemish Control"]
+        )
+        self.assertIn("Morning (AM)", res['answer'])
+        self.assertIn("Evening (PM)", res['answer'])
+        self.assertIn("SPF", res['answer'])
+        self.assertIn("patch-test", res['answer'].lower())
+
 
 if __name__ == '__main__':
     unittest.main()
