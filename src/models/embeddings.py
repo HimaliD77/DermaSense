@@ -36,9 +36,12 @@ class ProductEmbedder:
     def _load_model(self):
         """Loads the SentenceTransformer model into memory."""
         if self.model is None:
-            print(f"Loading SentenceTransformer model '{self.model_name}'...")
-            self.model = SentenceTransformer(self.model_name)
-            print("SentenceTransformer loaded successfully.")
+            import torch
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            gpu_info = f" ({torch.cuda.get_device_name(0)})" if device == "cuda" else ""
+            print(f"Loading SentenceTransformer model '{self.model_name}' on device: {device.upper()}{gpu_info}...")
+            self.model = SentenceTransformer(self.model_name, device=device)
+            print(f"SentenceTransformer loaded successfully on {device.upper()}.")
 
     def load_index_if_available(self, embeddings_path=DEFAULT_EMBEDDINGS_PATH, index_path=DEFAULT_INDEX_PATH):
         """Loads precomputed embeddings and FAISS index if they exist on disk."""

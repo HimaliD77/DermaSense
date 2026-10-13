@@ -52,11 +52,14 @@ class CrossEncoderReranker:
         if self.model is not None:
             return True
         try:
+            import torch
             from sentence_transformers import CrossEncoder
-            print(f"Loading CrossEncoder reranker '{self.model_name}'...")
-            self.model = CrossEncoder(self.model_name, max_length=self.max_length)
+            device = "cuda" if torch.cuda.is_available() else "cpu"
+            gpu_info = f" ({torch.cuda.get_device_name(0)})" if device == "cuda" else ""
+            print(f"Loading CrossEncoder reranker '{self.model_name}' on device: {device.upper()}{gpu_info}...")
+            self.model = CrossEncoder(self.model_name, max_length=self.max_length, device=device)
             self.is_available = True
-            print("✓ CrossEncoder reranker loaded successfully.")
+            print(f"✓ CrossEncoder reranker loaded successfully on {device.upper()}.")
             return True
         except Exception as e:
             print(f"⚠️ Warning: Failed to load CrossEncoder model '{self.model_name}': {e}")
